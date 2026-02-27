@@ -5,13 +5,15 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <title>{{ $title ?? config('app.name') }}</title>
+        <title>Employee | {{ $title ?? config('app.name') }}</title>
         {{-- <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script> --}}
         <link
             rel="stylesheet"
             type="text/css"
             href="https://cdn.jsdelivr.net/npm/@phosphor-icons/web@2.1.2/src/bold/style.css"
         />
+        {{-- <script src="https://cdn.jsdelivr.net/npm/chart.js"></script> --}}
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
         @vite(['resources/css/app.css', 'resources/js/app.js'])
 
         @livewireStyles
@@ -19,7 +21,6 @@
     <body>
         <div class="flex">
             @include('sweetalert2::index');
-
             <!-- Sidebar -->
             <livewire:employee.components.sidebar />
 
@@ -28,7 +29,10 @@
             </main>
         </div>
 
-
         @livewireScripts
-        </body>
+
+        {{-- <script
+        src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.js">
+        </script> --}}
+    </body>
 </html>

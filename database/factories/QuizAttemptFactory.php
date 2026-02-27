@@ -22,13 +22,13 @@ class QuizAttemptFactory extends Factory
     {
         return [
             'quiz_id' => Quiz::inRandomOrder()->first()->id,
-            'user_id' => User::inRandomOrder()->first()->id,
+            'user_id' => User::inRandomOrder()-> first() -> id ,
             'score' => $this ->faker->numberBetween(1,100),
             'status' => $this -> faker -> randomElement([
                 'done',
                 // 'in_progress'
             ]),
-            'submitted_at' => Carbon::now(),
+            'submitted_at' => $this -> faker -> dateTimeBetween('-1 years', 'now'),
         ];
     }
 }
