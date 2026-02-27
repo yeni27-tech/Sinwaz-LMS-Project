@@ -36,6 +36,30 @@ class QuizAttemptService
             throw $th;
         }
     }
+
+    public function getUserHistoryQuizAttempt() {
+        try {
+            return $this -> quizAttemptRepositoryInterface -> findUserHistoryQuizAttempt();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function getUserHistoryQuizAttemptGroupByMonth() {
+        try {
+            return $this -> quizAttemptRepositoryInterface -> findUserHistoryQuizAttemptGroupByMonth();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function getUserHistoryTotalQuizScoreGroupByMonth() {
+        try {
+            return $this -> quizAttemptRepositoryInterface -> findUserHistoryTotalQuizScoreGroupByMonth();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
     public function getQuizAttempts($id) {
         try {
             return $this->quizAttemptRepositoryInterface->findQuizAttempts();

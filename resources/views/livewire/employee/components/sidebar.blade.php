@@ -3,7 +3,7 @@
 >
     <div class="h-16 flex items-center justify-between px-6 border-b border-slate-200">
         <div class="flex items-center gap-3">
-            {{-- <div class="h-10 w-10 rounded-xl bg-blue-600 shadow-sm"></div> --}}
+            <div class="h-10 w-10 rounded-xl bg-blue-600 shadow-sm"></div>
             <div>
                 <div class="font-semibold leading-tight">
                     {{-- {{ Auth::user() ->rhh name }} --}}
@@ -50,13 +50,12 @@
         </a>
 
         <div class="pt-3 mt-3 border-t border-slate-200">
-            <a href="#" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-100 transition">
+            <a href="{{ route('employee.profile') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-100 transition">
                 <span class="h-9 w-9 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center">
-                    <svg class="h-5 w-5 text-slate-700" viewBox="0 0 24 24" fill="none">
-                        <path d="M12 15.5a3.5 3.5 0 100-7 3.5 3.5 0 000 7z" stroke="currentColor" stroke-width="2"/>
-                        <path d="M19.4 15a8 8 0 10-14.8 0" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-                    </svg>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#000000" viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
+                      </svg>
                 </span>
+
                 <div>
                     <div class="text-sm font-semibold">Profile</div>
                     <div class="text-xs text-slate-500">system config</div>
