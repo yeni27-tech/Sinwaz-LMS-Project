@@ -14,7 +14,7 @@ class LeaderboardPage extends Component
         $quizAttemptService = app(QuizAttemptService::class);
 
         $this->top10LeaderboardsData = $quizAttemptService->getLeaderboardsPerMonth();
-        // dd($this->top10LeaderboardsData[0]);
+        // dd($this->top10LeaderboardsData);
 
     }
 

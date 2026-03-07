@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Attributes\UseFactory;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Notifications\Notifiable;
 
 #[UseFactory(QuizAttemptFactory::class)]
@@ -31,5 +32,9 @@ class QuizAttempt extends Model
 
     public function user(): BelongsTo {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function quizAttemptAnswer() : HasMany {
+        return $this->hasMany(QuizAttemptAnswer::class,'quiz_attempt_id', 'id');
     }
 }

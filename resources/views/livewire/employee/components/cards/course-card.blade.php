@@ -1,4 +1,4 @@
-<a href="{{ route('course.detail', ['id' => $this -> courseById -> id]) }}" class=" rounded-lg shadow-inner bg-slate-50 w-full">
+<a href="{{ route('course.detail', ['id' => $this -> courseById -> id]) }}" class=" rounded-lg shadow-inner bg-slate-50  min-w-[250px] w-[250px]">
     <div class=" min-h-[120px] max-h-[200px] bg-blue-500 relative">
         <div class=" absolute bottom-0 left-0 text-9xl opacity-35 rotate-12 text-slate-50">
             <i class="ph-bold ph-book"></i>

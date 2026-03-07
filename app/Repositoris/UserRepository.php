@@ -15,6 +15,19 @@ class UserRepository implements UserRepositoryInterface
         return $data;
    }
 
+   public function findUserByEmail(string $email)
+   {
+        $user = User::where("email", $email)->first();
+
+        return $user;
+   }
+
+   public function findUserById($id) {
+        $user = User::findOrFail($id);
+
+        return $user;
+   }
+
      public function findAllUserPagination(string $search = '', int $perPage = 10)
     {
         return User::query()
@@ -37,8 +50,9 @@ class UserRepository implements UserRepositoryInterface
             'name' => $request -> name,
             'email' => $request -> email,
             'password' => $request -> password,
-            'divisi_id' => $request -> divisiId,
+            'divisi_id' => $request -> divisi_id,
             'number_phone' => $request -> numberPhone,
+            'role' => $request -> role,
         ]);
 
         return $newUser;
@@ -50,8 +64,9 @@ class UserRepository implements UserRepositoryInterface
             'name' => $request -> name,
             'email' => $request -> email,
             'password' => $request -> password,
-            'divisi_id' => $request -> divisiId,
+            'divisi_id' => $request -> divisi_id,
             'number_phone' => $request -> numberPhone,
+            'role' => $request -> role,
         ]);
    }
 

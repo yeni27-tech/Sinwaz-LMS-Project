@@ -22,6 +22,10 @@ class QuizController extends Controller
         return view('pages.employee.quiz.quiz-detail-page');
     }
 
+    public function quizResult($id) {
+        return view('pages.employee.quiz.quiz-attempt-result-page');
+    }
+
     public function quizStartConfirmation($id){
         return view('pages.employee.quiz.quiz-start-confirmation-page');
     }
@@ -81,8 +85,11 @@ class QuizController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Quiz $quiz)
+    public function destroy($id)
     {
-        //
+
+        $this->quizService->deleteQuiz($id);
+
+        return redirect()->route('dashboard.admin.quiz');
     }
 }

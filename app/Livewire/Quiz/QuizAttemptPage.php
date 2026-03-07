@@ -11,6 +11,7 @@ use App\Services\QuizAttemptService;
 use DateTime;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Component;
+use SweetAlert2\Laravel\Swal;
 
 class QuizAttemptPage extends Component
 {
@@ -22,14 +23,19 @@ class QuizAttemptPage extends Component
     public $quizAttemptById;
     public $quizAttemptService;
     public $score;
+    public $quizAttemptAnswers;
 
     public function mount($id)
     {
         $quizAttemptService = app(QuizAttemptService::class);
         $quizAttemptAnswerService = app(QuizAttemptAnswerService::class);
+
+
+
         $this->quizAttemptId = $id;
+        $this -> quizAttemptAnswers = $quizAttemptAnswerService -> getQuizAttemptAnswersByQuizAttemptId($id);
         $this -> quizAttemptById = $quizAttemptService -> getQuizAttemptById($this -> quizAttemptId);
-        $quizAttemptAnswers = $quizAttemptAnswerService -> getQuizAttemptAnswersByQuizAttemptId($id);
+
 
         foreach ($this->quizAttemptById -> quiz -> question as $question) {
             $this->questions[$question->id] = $question->text;
@@ -39,11 +45,13 @@ class QuizAttemptPage extends Component
             }
         }
 
-        foreach ($quizAttemptAnswers as $quizAttemptAnswer) {
+        foreach ($this -> quizAttemptAnswers as $quizAttemptAnswer) {
             if($quizAttemptAnswer ->  answer -> is_correct === true) {
                 $this -> score += 1;
             }
         }
+
+        // dd($this -> quizAttemptAnswers);
     }
     public function placeholder() {
         return view('components.loading');
@@ -74,17 +82,23 @@ class QuizAttemptPage extends Component
     }
 
     public function submitQuiz() {
-        $score = $this -> score;
+        $score = floor($this -> score * 100 / $this -> quizAttemptById -> quiz -> question  -> count());
         $quizAttemptService = app(QuizAttemptService::class);
         $quizAttemptById = $this -> quizAttemptById;
         $quizAttemptRequestDTO = new QuizAttemptRequestDTO([
             'quiz_id' =>  $quizAttemptById -> quiz -> id,
             'user_id' => Auth::user() -> id,
-            'score' => floor($score / $quizAttemptById -> quiz -> question  -> count() * 100),
+            'score' => $score,
             'status' => 'done',
             'submitted_at' => new DateTime(),
         ]);
 
         $quizAttemptService -> submitQuiz( $quizAttemptById -> id, $quizAttemptRequestDTO -> score);
+
+        Swal::success([
+            'title' => 'Submit Quiz Successfully'
+        ]);
+
+        return redirect()->route('quiz.result', ['id' => $this -> quizAttemptId]);
     }
 }

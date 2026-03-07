@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTO\CourseRequestDTO;
 use App\Interfaces\CourseRepositoryInterface;
+use SweetAlert2\Laravel\Swal;
 
 class CourseService
 {
@@ -48,22 +49,34 @@ class CourseService
 
     public function postCourse($tutorId, CourseRequestDTO $courseRequest) {
         try {
-            return $this -> courseRepositoryInterface -> createCourse($tutorId,$courseRequest);
+            $this -> courseRepositoryInterface -> createCourse($tutorId,$courseRequest);
+
+            Swal::success([
+                'title' => 'Create Course Successfully'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }
     }
 
-    public function putCourse($id, $tutorId, CourseRequestDTO $courseRequest): mixed {
+    public function putCourse($id, $tutorId, CourseRequestDTO $courseRequest) {
         try {
-            return $this -> courseRepositoryInterface -> updateCourse($id,$tutorId,$courseRequest);
+            $this -> courseRepositoryInterface -> updateCourse($id,$tutorId,$courseRequest);
+
+            Swal::success([
+                'title' => 'Update Course Successfully'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }
     }
     public function deleteCourse($id) {
         try {
-            return $this -> courseRepositoryInterface -> removeCourse($id);
+            $this -> courseRepositoryInterface -> removeCourse($id);
+
+             Swal::success([
+                'title' => 'Delete Course Successfully'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -8,6 +8,7 @@ interface DivisiRepositoryInterface
 {
     public function findAllDivisis();
     public function findAllDivisisWithoutPagination();
+    public function findAllDivisiPagination($search ='', int $perPage = 10);
     public function findDivisiById($id);
     public function createDivisi(DivisiRequestDTO $request);
     public function updateDivisi($id, DivisiRequestDTO $request);

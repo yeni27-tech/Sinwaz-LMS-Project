@@ -14,10 +14,13 @@ use App\Services\QuizService;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
+use SweetAlert2\Laravel\Swal;
+use SweetAlert2\Laravel\Traits\WithSweetAlert;
 
 class CreateQuizDetail extends Component
 {
     use WithPagination;
+    use WithSweetAlert;
 
     public $answerText = "";
     public $quizId;
@@ -102,7 +105,13 @@ class CreateQuizDetail extends Component
             'description' => $this -> description,
         ]);
 
-        return $quizService -> putQuiz($id, $quizRequestDto);
+
+        $quizService -> putQuiz($id, $quizRequestDto);
+
+        Swal::success([
+            'title' => 'Update quiz successfully',
+        ]);
+
     }
 
     #[Computed]

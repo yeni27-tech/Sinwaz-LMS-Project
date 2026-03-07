@@ -14,23 +14,16 @@ class UpdateJobForm extends Component
 {
     use WithPagination;
 
-    public $name;
     public $id;
-    public $description;
-    public $type;
-    public $location;
-    public $education;
-    public $experience;
+    public $jobById;
     public $showUpdateJobForm = true;
 
-    public function mount($id,$name,$description,$type,$location,$education,$experience) {
-        $this->name = $name;
-        $this->description = $description;
-        $this->type = $type;
-        $this->location = $location;
-        $this->education = $education;
-        $this->experience = $experience;
-        $this->id = $id;    }
+    public function mount($id) {
+        $jobService = app(JobService::class);
+
+        $this->id = $id;
+        $this -> jobById = $jobService -> getJobById($this -> id);
+    }
 
     public function placeholder() {
         return view('components.loading');
@@ -38,12 +31,12 @@ class UpdateJobForm extends Component
     public function submit() {
         $jobService = app(JobService::class);
         $dto = new JobRequestDTO([
-            'description'=> $this->description,
-            'name'=> $this->name,
-            'type'=> $this->type != null ? $this->type : 'fulltime',
-            'location'=> $this->location != null ? $this->location : 'cirebon',
-            'education'=> $this->education != null ? $this->education : 'SD',
-            'experience'=> $this->experience != null ? $this->experience : '< 1 Tahun',
+            'description'=> $this -> jobById->description,
+            'name'=> $this -> jobById->name,
+            'type'=> $this -> jobById->type != null ? $this -> jobById->type : 'fulltime',
+            'location'=> $this -> jobById->location != null ? $this -> jobById->location : 'cirebon',
+            'education'=> $this -> jobById->education != null ? $this -> jobById->education : 'SD',
+            'experience'=> $this -> jobById->experience != null ? $this -> jobById->experience : '< 1 Tahun',
         ]);
 
         $this -> showUpdateJobForm= false;

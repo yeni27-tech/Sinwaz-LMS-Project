@@ -1,5 +1,7 @@
 <div>
-    <div class="p-4 md:p-6 space-y-6">
+    <livewire:components.sidebar-top />
+
+    <div class="p-4 md:p-6 space-y-6 mt-4">
             <!-- HERO -->
 
             <!-- QUICK KPIs -->
@@ -7,7 +9,7 @@
             <section class=" flex flex-row items-center justify-between">
                 <h1 class=" font-bold text-4xl">Table Users</h1>
 
-                <button wire:click="openCreateUserForm" type="button" class=" bg-blue-500 px-4 py-2 rounded-md text-slate-50 font-bold">Tambah Data</button>
+                <a href="{{ route('dashboard.admin.user.create') }}" class=" bg-blue-500 px-4 py-2 rounded-md text-slate-50 font-bold">Tambah Data</a>
             </section>
 
             <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
@@ -15,7 +17,7 @@
                     <div class="flex items-center justify-between">
                         <div>
                             <div class="text-sm font-semibold text-slate-700">Total Users</div>
-                            <div class="text-xs text-slate-500">Registered accounts</div>
+                            <div class="text-xs text-slate-500">Account Active</div>
                         </div>
                         <div class="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
                         <svg class="h-5 w-5 text-blue-700" viewBox="0 0 24 24" fill="none">
@@ -26,11 +28,11 @@
                 </div>
                 <div class="mt-3 flex items-end justify-between">
                     <div class="text-3xl font-semibold">{{ $this->usersPagination->total() }}</div>
-                    <div class="text-sm font-semibold text-emerald-600">↑ 12%</div>
+                    {{-- <div class="text-sm font-semibold text-emerald-600">↑ 12%</div> --}}
                 </div>
-                <div class="mt-2 h-2 w-full rounded-full bg-slate-100 overflow-hidden">
+                {{-- <div class="mt-2 h-2 w-full rounded-full bg-slate-100 overflow-hidden">
                     <div class="h-full w-[62%] bg-blue-600 rounded-full"></div>
-                </div>
+                </div> --}}
             </div>
 
             <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
@@ -47,7 +49,7 @@
                     </div>
                 </div>
                 <div class="mt-3 flex items-end justify-between">
-                    <div class="text-3xl font-semibold">{{ $this->usersPagination -> where('role', 'admin')->count() }}</div>
+                    <div class="text-3xl font-semibold">{{ $this->usersData -> where('role', 'admin') -> count() }}</div>
                 </div>
 
             </div>
@@ -66,7 +68,7 @@
                     </div>
                 </div>
                 <div class="mt-3 flex items-end justify-between">
-                    <div class="text-3xl font-semibold">{{ $this->usersPagination -> where('role', 'employee')->count() }}</div>
+                    <div class="text-3xl font-semibold">{{ $this->usersData -> where('role', 'employee') -> count()}}</div>
                 </div>
 
             </div>
@@ -86,7 +88,7 @@
                     </div>
                 </div>
                 <div class="mt-3 flex items-end justify-between">
-                    <div class="text-3xl font-semibold">{{ $this->usersPagination -> where('role', 'umum')->count() }}</div>
+                    <div class="text-3xl font-semibold">{{  $this->usersData -> where('role', 'umum') -> count() }}</div>
                 </div>
             </div>
         </section>
@@ -129,9 +131,10 @@
 
             <div class="border-t border-slate-200">
                 <table class="w-full text-sm">
-                    <thead class="bg-slate-50 text-slate-600">
+                    <thead class="bg-slate-900 text-slate-50">
                         <tr>
-                            <th class="text-left px-4 py-3 font-semibold">Name</th>
+                            <th class="text-left px-4 py-3 font-semibold">No</th>
+                            <th class="text-left px-4 py-3 font-semibold">Nama</th>
                             <th class="text-left px-4 py-3 font-semibold">Email</th>
                             <th class="text-left px-4 py-3 font-semibold">Number Phone</th>
                             <th class="text-left px-4 py-3 font-semibold">Role</th>
@@ -142,6 +145,7 @@
                     <tbody class="divide-y divide-slate-200">
                         @forelse($this->usersPagination as $user)
                         <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-semibold">{{ $loop -> iteration}}</td>
                             <td class="px-4 py-3 font-semibold">{{ $user->name }}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $user->email }}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $user->number_phone }}</td>
@@ -153,28 +157,30 @@
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-right flex flex-row gap-2">
+                                <form id="form-user-{{ $user -> id }}" action="{{ route('user.destroy', ['id' => $user -> id]) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                </form>
+
+                                       <a href="{{ route('dashboard.admin.user.edit', ['id' => $user -> id] ) }}"
+
+                                        class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:bg-slate-50 transition"
+                                        >
+                                            <x-icon.pen :width="18" height="18" />
+                                        </a>
+
                                     <button
                                     id="delete-btn-{{ $user -> id }}"
+                                    type="button"
+                                    {{-- onclick="confirm('tes {{ $user->id }}')" --}}
+                                    onclick="handleOnDelete('form-user-{{ $user -> id }}')"
                                     {{-- onclick="deleteConfirmation({{ $user -> id }})" --}}
                                     {{-- onclick="handleOnDelete(event, {{ $user -> id }})" --}}
                                     >
 
                                         <x-icon.trash :width="18" height="18" />
                                     </button>
-                                <button type="button"
-                                wire:click="openUpdateUserForm(
-                                    @js($user->id),
-                                    @js($user->name),
-                                    @js($user->role),
-                                    @js($user->divisi_id),
-                                    @js($user->email),
-                                    @js($user->number_phone),
-                                    @js($user->password)
-                                )"
-                                class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:bg-slate-50 transition"
-                                >
-                                    View
-                                </button>
+
                             </td>
                         </tr>
                         @empty
@@ -245,27 +251,6 @@
             </div>
         </section>
     </div>
-
-
-    @script
-        <script>
-            $wire.$on("deleteConfirm", () => {
-                alert('deleteConfirm')
-            });
-            </script>
-    @endscript
-
-    @if ($this -> showCreateUserForm)
-        {{-- <div wire:click='closeCreateUserForm'> --}}
-            <livewire:admin.components.create-user-form showCreateUserForm="{{ $this -> showCreateUserForm }}" />
-        {{-- </div> --}}
-
-    @elseif ($this -> showUpdateUserForm)
-        <div >
-            <livewire:admin.components.update-user-form id="{{ $this -> id }}"  name="{{ $this -> name }}" email="{{ $this -> email }}" number_phone="{{ $this -> number_phone}}" divisi_id="{{ $this -> divisi_id }}" role="{{ $this -> role }}" password="{{ $this -> password }}"  />
-        </div>
-    @endif
-</div>
 
 
 

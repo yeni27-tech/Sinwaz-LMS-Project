@@ -25,6 +25,23 @@ class UserService
         }
     }
 
+    public function getUserById($id) {
+        try {
+            return $this->userRepositoryInterface->findUserById($id);
+
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function getUserByEmail(string $email) {
+        try {
+            return $this -> userRepositoryInterface->findUserByEmail($email);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public function getUsersPagination(string $search = '', int $perPage = 10) {
         try {
             $users = $this->userRepositoryInterface->findAllUserPagination($search, $perPage);
@@ -64,9 +81,17 @@ class UserService
 
     public function putUser($id, UserRequestDTO $userRequest) {
         $this -> userRepositoryInterface ->updateUser($id, $userRequest);
+
+        Swal::success([
+            'title' => 'Update user successfully',
+        ]);
     }
 
     public function deleteUser($id) {
         $this -> userRepositoryInterface ->removeUser($id);
+
+        Swal::success([
+            'title' => 'Delete user successfully',
+        ]);
     }
 }

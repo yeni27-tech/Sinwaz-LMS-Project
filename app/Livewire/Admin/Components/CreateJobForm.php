@@ -19,13 +19,10 @@ class CreateJobForm extends Component
     public $name;
     public $description;
     public $type;
-    public $location;
-    public $education;
-    public $experience;
-    public $showCreateJobForm = true;
 
-    public function mount($showCreateJobForm) {
-        $this->showCreateJobForm = $showCreateJobForm;
+    public $showCreateJobForm = false;
+
+    public function mount() {
     }
 
     public function placeholder() {

@@ -9,9 +9,13 @@ use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Livewire\Attributes\Validate;
 use Livewire\Form;
+use SweetAlert2\Laravel\Traits\WithSweetAlert;
+use Symfony\Component\HttpFoundation\Response;
 
 class LoginForm extends Form
 {
+    use WithSweetAlert;
+
     #[Validate('required|string|email')]
     public string $email = '';
 
@@ -68,5 +72,19 @@ class LoginForm extends Form
     protected function throttleKey(): string
     {
         return Str::transliterate(Str::lower($this->email).'|'.request()->ip());
+    }
+
+     protected function redirectAfterLogin(): Response
+    {
+        if (Auth::user()->role == 'admin') {
+            return redirect()->route('dashboard.admin');
+        }
+
+        if (Auth::user()->role == 'employee') {
+            return redirect()->route('employee.home');
+        }
+
+        // Default redirect
+        return redirect()->route('home');
     }
 }

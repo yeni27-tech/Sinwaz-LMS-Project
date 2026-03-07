@@ -19,9 +19,12 @@ class DivisiController extends Controller
         return view("livewire.pages.tesPage", compact("allDivisi"));
     }
 
+    public function adminDashboard() {
+        return view('pages.dashboard.admin.divisi');
+    }
     public function create()
     {
-        //
+        return view('pages.dashboard.admin.divisi.create-divisi');
     }
 
     /**
@@ -32,32 +35,24 @@ class DivisiController extends Controller
         $this->divisiService->postDivisi($request -> toDTO());
     }
 
-    public function show(Divisi $divisi)
+    public function edit($id)
     {
-
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Divisi $divisi)
-    {
-        //
+        return view('pages.dashboard.admin.divisi.update-divisi');
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(DivisiRequest $request, Divisi $divisi)
+    public function update($id, DivisiRequest $request)
     {
-        $this ->divisiService->putDivisi($divisi['id'],$request);
+       return $this ->divisiService-> putDivisi($id,$request -> toDTO());
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Divisi $divisi)
+    public function destroy($id)
     {
-        //
+        return $this -> divisiService -> deleteDivisi($id);
     }
 }

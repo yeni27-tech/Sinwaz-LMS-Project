@@ -18,6 +18,10 @@ class MaterialController extends Controller
         $this->courseService = $courseService;
    }
 
+   public function adminDashboard() {
+        return view('pages.dashboard.admin.material');
+   }
+
     public function materialDetail($id) {
         return view('pages.employee.material-detail-page');
     }
@@ -34,7 +38,12 @@ class MaterialController extends Controller
      */
     public function create()
     {
-        //
+        return view('pages.dashboard.admin.material.create-material');
+    }
+
+    public function edit($id)
+    {
+        return view('pages.dashboard.admin.material.update-material');
     }
 
     /**
@@ -44,12 +53,14 @@ class MaterialController extends Controller
     {
         $newMaterial = $this -> materialService -> postMaterial($request -> toDTO());
 
-        return $newMaterial;
+        return redirect() -> route('dashboard.admin.course');
     }
 
     public function update($id, MaterialRequest $request)
     {
-        return $this -> materialService -> putMaterial($id, $request -> toDTO());
+        $this -> materialService -> putMaterial($id, $request -> toDTO());
+
+        return redirect() -> route('dashboard.admin.material');
     }
 
     /**
@@ -57,6 +68,8 @@ class MaterialController extends Controller
      */
     public function destroy($id)
     {
-        return $this -> materialService -> deleteMaterial($id);
+        $this -> materialService -> deleteMaterial($id);
+
+        return redirect() -> route('dashboard.admin.material');
     }
 }

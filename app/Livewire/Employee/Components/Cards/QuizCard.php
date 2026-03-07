@@ -2,19 +2,19 @@
 
 namespace App\Livewire\Employee\Components\Cards;
 
+use App\Services\QuizService;
 use Livewire\Component;
 
 class QuizCard extends Component
 {
     public $quizId;
-    public $quizName;
-    public $divisiName;
-    public $quizDuration;
-    public function mount($quizId,$quizName,$divisiName,$quizDuration ) {
+    public $quizById;
+    public $latestCard;
+    public function mount($quizId ) {
+        $quizService = app(QuizService::class);
+
         $this->quizId = $quizId;
-        $this->quizName = $quizName;
-        $this->divisiName = $divisiName;
-        $this->quizDuration = $quizDuration;
+        $this ->quizById = $quizService -> getQuizById( $this->quizId );
     }
     public function render()
     {

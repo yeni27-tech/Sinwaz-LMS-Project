@@ -24,7 +24,7 @@ class QuizRepository implements QuizRepositoryInterface
         return Quiz::all();
     }
 
-    public function findTop10nQuizzes()
+    public function findTopQuizzesPerMonth($take = 10)
     {
         $topQuiz = DB::table('quizzes')
                 ->leftJoin('divisis', 'quizzes.divisi_id', '=', 'divisis.id')
@@ -38,7 +38,7 @@ class QuizRepository implements QuizRepositoryInterface
                 ->where('status', 'done')
                 ->groupBy('quizzes.id')
                 ->orderByDesc('quiz_attempts_count')
-                ->take(10)
+                ->take($take)
                 ->get();
 
         // $topQuiz = QuizAttempt::groupBy("quiz_id")->orderBy();

@@ -1,7 +1,10 @@
 <main class="h-screen  flex flex-row items-center">
-       <aside class=" h-screen min-w-[250px] overflow-y-scroll w-fit bg-gray-100 p-3">
+       <aside class=" h-screen lg:min-w-[250px] min-w-[200px] overflow-y-scroll w-fit bg-gray-100 p-3">
             <div class=" flex flex-row items-center justify-between mb-4">
-                <h1 class=" font-bold uppercase text-sm">
+            <a href="{{ route('dashboard.admin.quiz') }}" class="flex flex-row items-center  gap-2">
+                <i class="ph ph-arrow-left"></i>
+            </a>
+        <h1 class=" font-bold uppercase text-sm">
                     Questions
                 </h1>
 
@@ -53,9 +56,6 @@
                             <p class=" text-xs text-light">Update quiz data di sini</p>
                         </div>
 
-                        <button class=" px-4 py-2 bg-blue-600 rounded-md font-bold text-slate-50">
-                            {{-- {{  }} --}}
-                        </button>
                     </div>
                     {{-- questions --}}
                     <div class=" flex flex-col gap-2 w-full min-w-full">
@@ -72,7 +72,7 @@
                                     <x-input-label for="divisi_id" class=" font-bold text-lg" :value="__('Divisi_id')" />
                                 </div>
 
-                                <x-select wire:model="form.divisi_id" id="divisi_id" name="divisi_id" class=" w-fit h-fit text-xs">
+                                <x-select wire:model="form.divisi_id" id="divisi_id" name="divisi_id" class=" w-11/12 truncate h-fit text-xs">
                                     @foreach ($this -> divisisData as $divisi)
                                         <x-option-select value="{{ $divisi->id }}">{{ $divisi->name }}</x-option-select>
                                     @endforeach
@@ -117,7 +117,7 @@
                                     <h1 class=" font-bold text-sm">Question {{ $loop -> iteration  }}</h1>
                                 </div>
 
-                                <x-text-input wire:keydown.enter.prevent='inputQuestionText({{ $question -> id }})' value="{{ $question -> text }}" type="text" class="outline-1" wire:model.defer="questions.{{ $question->id }}"  />
+                                <x-text-input wire:change='inputQuestionText({{ $question -> id }})' value="{{ $question -> text }}" type="text" class="outline-1" wire:model.defer="questions.{{ $question->id }}"  />
                             </div>
 
                             {{-- choices --}}
@@ -133,7 +133,7 @@
                                                     <input  @checked($answer->is_correct) type="radio" name="lms_option" value="{{ $answer -> name }}" class="w-7 h-7 z-50 border-2 border-blue-500 rounded-full appearance-none checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition-all cursor-pointer ring-offset-2 focus:ring-2 focus:ring-blue-300">
                                                 </button>
 
-                                                <input wire:key="answer-{{ $answer->id }}" wire:keydown.enter.prevent="inputAnswerText({{ $answer -> id }})" wire:model.defer="answers.{{ $answer->id }}"
+                                                <input wire:key="answer-{{ $answer->id }}" wire:change.prevent="inputAnswerText({{ $answer -> id }})" wire:model.defer="answers.{{ $answer->id }}"
                                                   type="text" value="{{ $answer -> text }}"  class="bg-gray-100 px-6 w-full py-3 rounded-lg text-slate-700 font-medium group-hover:bg-blue-50 group-hover:text-blue-700 border border-transparent group-hover:border-blue-200 transition-all flex-1" />
                                             </div>
 
@@ -151,8 +151,10 @@
                                             </h1>
                                         </button>
 
-                                    <div class="mt-8 p-4 bg-slate-50 rounded-lg border border-slate-200">
-                                        <p class="text-sm text-slate-500">Jawaban Benar: <span id="selectedDisplay" class="font-bold text-blue-600">Belum memilih</span></p>
+                                    <div class="mt-8 p-4 bg-slate-50 rounded-lg border border-slate-200 flex flex-row items-center gap-2">
+                                        <p class="text-sm text-slate-500">Jawaban Benar:   <span class="font-bold text-blue-600">{{ $question -> answer -> where('is_correct', 1) -> first() != null ? $question -> answer -> where('is_correct', 1) -> first() -> text : 'Belum Memilih' }}</span>
+                                        </p>
+
                                     </div>
                                 </form>
                             </div>

@@ -1,5 +1,7 @@
 <div>
-    <div class="p-4 md:p-6 space-y-6">
+    <livewire:components.sidebar-top />
+
+    <div class="p-4 md:p-6 space-y-6 mt-4">
             <!-- HERO -->
 
             <!-- QUICK KPIs -->
@@ -7,7 +9,7 @@
             <section class=" flex flex-row items-center justify-between">
                 <h1 class=" font-bold text-4xl">Table Jobs</h1>
 
-                <button wire:click="openCreateJobForm" type="button" class=" bg-blue-500 px-4 py-2 rounded-md text-slate-50 font-bold">Tambah Data</button>
+                <a href="{{ route('dashboard.admin.job.create')}}" class=" bg-blue-500 px-4 py-2 rounded-md text-slate-50 font-bold">Tambah Data</a>
             </section>
 
         <!-- TABLES -->
@@ -24,7 +26,7 @@
                         <div class="relative">
                             <input
                             type="text"
-                            placeholder="Search user..."
+                            placeholder="Search job..."
                             wire:model.live.debounce.300ms="search"
                             class="w-56 px-3 py-2 rounded-xl border border-slate-200 bg-white text-sm font-semibold placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
                             />
@@ -48,9 +50,10 @@
 
             <div class="border-t border-slate-200">
                 <table class="w-full text-sm">
-                    <thead class="bg-slate-50 text-slate-600">
+                    <thead class="bg-slate-900 text-slate-50">
                         <tr>
-                            <th class="text-left px-4 py-3 font-semibold">Name</th>
+                            <th class="text-left px-4 py-3 font-semibold">No</th>
+                            <th class="text-left px-4 py-3 font-semibold">Nama</th>
                             <th class="text-left px-4 py-3 font-semibold">Job Maker</th>
                             <th class="text-left px-4 py-3 font-semibold">Type</th>
                             <th class="text-left px-4 py-3 font-semibold">Location</th>
@@ -64,6 +67,7 @@
                     <tbody class="divide-y divide-slate-200">
                         @forelse($this -> jobPagination as $job)
                         <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-semibold">{{ $loop -> iteration}}</td>
                             <td class="px-4 py-3 font-semibold">{{ $job->name }}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $job -> job_maker_id != null ? $job -> jobMaker -> name  : 'None'}}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $job->type }}</td>
@@ -72,29 +76,30 @@
                             <td class="px-4 py-3 text-slate-600">{{ $job->education  }}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $job->description }}</td>
                             <td class="px-4 py-3 text-right flex flex-row gap-2">
+                                <form id="form-job-{{ $job -> id }}" action="{{ route('job.destroy', ['id' => $job -> id]) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                </form>
+
+                                    <a href="{{ route('dashboard.admin.job.edit', ['id' => $job -> id] ) }}"
+                                    class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:bg-slate-50 transition"
+                                    >
+                                        <x-icon.pen :width="18" height="18" />
+                                    </a>
+
                                     <button
                                     id="delete-btn-{{ $job -> id }}"
-                                    wire:click="deleteJob({{ $job -> id }})"
+                                    type="button"
+                                    {{-- onclick="confirm('tes {{ $job->id }}')" --}}
+                                    onclick="handleOnDelete('form-job-{{ $job -> id }}')"
+                                    {{-- onclick="deleteConfirmation({{ $job -> id }})" --}}
                                     {{-- onclick="handleOnDelete(event, {{ $job -> id }})" --}}
                                     >
 
                                         <x-icon.trash :width="18" height="18" />
                                     </button>
 
-                                <button type="button"
-                                wire:click="openUpdateJobForm(
-                                    @js($job->id),
-                                    @js($job->name),
-                                    @js($job->description),
-                                    @js($job->type),
-                                    @js($job->location),
-                                    @js($job->education),
-                                    @js($job->experience),
-                                )"
-                                class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:bg-slate-50 transition"
-                                >
-                                    View
-                                </button>
+
                             </td>
                         </tr>
                         @empty
@@ -161,15 +166,4 @@
             </div>
         </section>
     </div>
-
-       @if ($this -> showCreateJobForm)
-         <div>
-            <livewire:admin.components.create-job-form showCreateJobForm="{{ $this -> showCreateJobForm }}" />
-        </div>
-
-    @elseif ($this -> showUpdateJobForm)
-        <div >
-            <livewire:admin.components.update-job-form id="{{ $this -> id }}"  name="{{ $this -> name }}" description="{{ $this -> description }}" type="{{ $this -> type }}" location="{{ $this -> location }}" experience="{{ $this -> experience }}" education="{{ $this -> education }}" />
-        </div>
-    @endif
 </div>

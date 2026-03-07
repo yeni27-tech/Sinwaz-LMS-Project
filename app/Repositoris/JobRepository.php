@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Auth;
 class JobRepository implements JobRepositoryInterface
 {
     public function findJobById($id) {
-        return Job::lazyById($id);
+        return Job::findOrFail($id);
     }
 
     public function findJobs()

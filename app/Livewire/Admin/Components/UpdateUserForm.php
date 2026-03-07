@@ -13,23 +13,16 @@ class UpdateUserForm extends Component
 {
     use WithPagination;
 
-    public $email;
     public $id;
-    public $name;
-    public $role;
-    public $divisi_id;
-    public $number_phone;
-    public $password;
-    public $showCreateUserForm;
-    public $showUpdateUserForm;
+    public $userById;
+    public $showUpdateUserForm = false;
+    public $showCreateUserForm = false;
 
-    public function mount($name,$role,$divisi_id,$number_phone,$email,$password) {
-        $this->name = $name;
-        $this->role = $role;
-        $this->divisi_id = $divisi_id;
-        $this->number_phone = $number_phone;
-        $this->email = $email;
-        $this->password = $password;
+    public function mount($id) {
+        $userService = app(UserService::class);
+        $this->id = $id;
+
+        $this -> userById = $userService->getUserById($this->id);
     }
 
     public function placeholder() {
@@ -46,12 +39,12 @@ class UpdateUserForm extends Component
     public function submit($id) {
         $userService = app(UserService::class);
         $dto = new UserRequestDTO([
-            'email'=> $this->email,
-            'password'=> $this->password,
-            'name'=> $this->name,
-            'number_phone'=> $this->number_phone,
-            'divisi_id'=> $this->divisi_id,
-            'role'=> $this->role,
+            'email'=> $this -> userById->email,
+            'password'=> $this -> userById->password,
+            'name'=> $this -> userById->name,
+            'number_phone'=> $this -> userById->number_phone,
+            'divisi_id'=> $this -> userById->divisi_id,
+            'role'=> $this -> userById->role,
 
         ]);
 

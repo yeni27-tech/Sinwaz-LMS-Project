@@ -1,9 +1,12 @@
-<div>
-    <div class="space-y-6">
+<div class="">
+    <livewire:components.sidebar-top />
+
+    <div class="space-y-6 mt-4">
         <h1 class=" font-bold text-2xl">Leaderboard 🏆</h1>
 
-        <section class=" grid grid-cols-3 gap-4 h-full">
-            <div class="mt-8">
+        <section class=" grid lg:grid-cols-3 grid-cols-1 gap-4 h-full">
+            @if ($top10LeaderboardsData -> count() > 2)
+             <div class="mt-8">
                 <livewire:employee.components.cards.leaderboard-card :name="$this->top10LeaderboardsData[1] -> name" :total_score="$this->top10LeaderboardsData[0] -> total_score" :rank="2"  />
             </div>
 
@@ -14,6 +17,7 @@
             <div class="mt-8">
                 <livewire:employee.components.cards.leaderboard-card :name="$this->top10LeaderboardsData[2] -> name" :total_score="$this->top10LeaderboardsData[0] -> total_score" :rank="3" />
             </div>
+           @endif
         </section>
 
         <section>
@@ -47,7 +51,7 @@
                         @empty
                         <tr>
                             <td colspan="4" class="px-4 py-6 text-center text-sm text-slate-500">
-                                No users found.
+                                3 or more have to submit quiz first.
                             </td>
                         </tr>
                         @endforelse

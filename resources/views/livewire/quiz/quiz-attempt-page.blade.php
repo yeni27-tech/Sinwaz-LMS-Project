@@ -4,8 +4,6 @@
                 <h1 class=" font-bold uppercase text-sm">
                     Questions
                 </h1>
-
-
             </div>
 
             <div class=" flex flex-col gap-4">
@@ -42,7 +40,7 @@
             @endif
 
             <div class=" flex flex-col gap-4">
-                @foreach ($quizAttemptById -> quiz -> question as $question)
+                @foreach ($quizAttemptById -> quiz -> question as $questionIndex => $question)
                     <div wire:key="question-{{ $question -> id }}" class=" rounded-lg border border-slate-900 p-4 flex">
                         <div class=" justify-end flex">
 
@@ -69,17 +67,26 @@
                                             <div  class=" w-full flex flex-row items-center gap-3">
                                                 @if ($quizAttemptById -> status == 'in_progress')
                                                 <button type="button" wire:click='pickAnswer({{ $answer -> id }}, {{ $answer -> question_id }})'>
-                                                        <input @checked( $answer -> quizAttemptAnswer() -> count() === 1 ? true : false )  type="radio" name="lms_option" value="{{ $answer -> text }}" class="w-7 h-7 border-2 border-blue-500 rounded-full appearance-none checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition-all cursor-pointer ring-offset-2 focus:ring-2 focus:ring-blue-300"
+                                                        @if($questionIndex < $this -> quizAttemptAnswers-> count() &&$this -> quizAttemptAnswers[$questionIndex] -> answer_id === $answer -> id)
+                                                        <input @checked(true)  type="radio" name="lms_option" value="{{ $answer -> text }}" class="w-7 h-7 border-2 border-blue-500 rounded-full appearance-none checked: checked:border-blue-600 focus:outline-none transition-all cursor-pointer ring-offset-2 focus:ring-2 focus:ring-blue-300"
                                                             >
+
+                                                            @else
+
+                                                            <input @checked(false)  type="radio" name="lms_option" value="{{ $answer -> text }}" class="w-7 h-7 border-2 border-blue-500 rounded-full appearance-none checked: checked:border-blue-600 focus:outline-none transition-all cursor-pointer ring-offset-2 focus:ring-2 focus:ring-blue-300"
+                                                            >
+                                                            @endif
                                                         </button>
                                                     @endif
 {{--
-                                                    <input disabled @checked( $answer -> quizAttemptAnswer() -> count() === 1 ? true : false )  type="radio" name="lms_option" value="{{ $answer -> text }}" class="w-7 h-7 border-2 border-blue-500 rounded-full appearance-none checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition-all cursor-pointer ring-offset-2 focus:ring-2 focus:ring-blue-300"
+                                                    <input disabled @checked( $answer -> quizAttemptAnswer() -> count() === 1 && $this -> quizAttemptById -> status == 'done' ? true : false )  type="radio" name="lms_option" value="{{ $answer -> text }}" class="w-7 h-7 border-2 border-blue-500 rounded-full appearance-none checked:bg-blue-600 checked:border-blue-600 focus:outline-none transition-all cursor-pointer ring-offset-2 focus:ring-2 focus:ring-blue-300"
                                                     > --}}
 
+                                                    @if($this -> quizAttemptById -> submitted_at != null)
                                                     <div class="w-7 h-7 border-2 border-blue-500 rounded-full appearance-none focus:outline-none transition-all cursor-pointer ring-offset-2 focus:ring-2 focus:ring-blue-300 ring-blue-300 {{ $answer -> is_correct ? 'bg-blue-600 border-blue-600 p-[6.5px]' : '' }}">
                                                         <div class=" bg-slate-50 ring-blue-300 w-full/12 h-full rounded-full"></div>
                                                     </div>
+                                                    @endif
 
                                                 <h1   class="bg-gray-100 px-6 w-full py-3 rounded-lg text-slate-700 font-medium group-hover:bg-blue-50 group-hover:text-blue-700 border border-transparent group-hover:border-blue-200 transition-all flex-1" />
                                                     {{ $answer -> text }}
@@ -96,6 +103,7 @@
 
             @if ($quizAttemptById -> status == 'in_progress')
                 @if ($quizAttemptAnswers -> count() == $quizAttemptById -> quiz -> question  -> count())
+
                 <button wire:click.prevent="submitQuiz"  type="button" class="  text-slate-50 font-bold my-5 px-3 py-1 text-sm hover:cursor-pointer bg-blue-500 ">Submit</button>
 
                 @else
@@ -105,21 +113,3 @@
             @endif
         </section>
 </main>
-
-<script>
-  // Script untuk mendeteksi pilihan secara real-time
-  const radioButtons = document.querySelectorAll('input[name="lms_option"]');
-  const display = document.getElementById('selectedDisplay');
-
-  radioButtons.forEach(button => {
-     if (button.checked) {
-        display.innerText =  button.value;
-      }
-
-    button.addEventListener('change', () => {
-      if (button.checked) {
-        display.innerText =  button.value;
-      }
-    });
-  });
-</script>

@@ -10,7 +10,7 @@ class CourseRepository implements CourseRepositoryInterface
 {
     public function findCourseById($id) {
 
-       return Course::where('id', $id) -> first();
+       return Course::findOrFail($id);
     }
 
     public function findAllCoursePagination($search ='', int $perPage = 10)
@@ -46,6 +46,7 @@ class CourseRepository implements CourseRepositoryInterface
 
     public function updateCourse($id, $tutorId,CourseRequestDTO $request)
     {
+
          return Course::where('id', $id) ->update([
             'tutor_id' => $tutorId,
             'divisi_id' => $request->divisi_id,

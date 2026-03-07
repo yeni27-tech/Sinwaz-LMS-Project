@@ -2,32 +2,27 @@
 
 namespace App\Livewire\Admin\Components;
 
-use App\DTO\CourseRequestDTO;
-use App\DTO\UserRequestDTO;
+use App\Http\Requests\CourseRequest;
 use App\Services\CourseService;
 use App\Services\DivisiService;
-use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
 use Livewire\WithPagination;
+use SweetAlert2\Laravel\Traits\WithSweetAlert;
 
 class UpdateCourseForm extends Component
 {
-    use WithPagination;
+    use WithPagination, WithSweetAlert;
 
-    public $email;
-    public $name;
     public $id;
-    public $divisi_id;
-    public $description;
-    public $showUpdateCourseForm = true;
+    public $courseById;
 
-    public function mount($id,$name,$description,$divisi_id) {
-        $this->name = $name;
-        $this->description = $description;
-        $this->divisi_id = $divisi_id;
+    public function mount($id) {
+        $courseService = app(CourseService::class);
+
         $this->id = $id;
+        $this -> courseById=$courseService -> getCourseById($this ->id);
     }
 
     public function placeholder() {
@@ -47,22 +42,15 @@ class UpdateCourseForm extends Component
 
     public function submit() {
         $courseService = app(CourseService::class);
-        $dto = new CourseRequestDTO([
-            'description'=> $this->description,
-            'name'=> $this->name,
-            'divisi_id'=> $this->divisi_id != null ? $this->divisi_id : null,
-        ]);
+        $request = new CourseRequest();
 
-        $this -> showUpdateCourseForm = false;
-
-        $courseService -> putCourse($this -> id,Auth::user() -> id,$dto);
+        $courseService -> putCourse($this -> id,Auth::user() -> id,$request -> toDTO());
 
         return redirect()->route('dashboard.admin.course');
 
     }
 
     public function closeUpdateCourseForm() {
-        $this -> showUpdateCourseForm = false;
 
         return redirect()->route('dashboard.admin.course');
 

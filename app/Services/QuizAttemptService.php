@@ -21,6 +21,14 @@ class QuizAttemptService
         }
     }
 
+    public function getQuizAttemptByUserId($userId) {
+        try {
+            return $this->quizAttemptRepositoryInterface->findQuizAttemptByUserId($userId);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public function getLatestQuizAttemptByUserId($userId,$quizId) {
         try {
             return $this -> quizAttemptRepositoryInterface -> findLatestQuizAttemptByUserIdAndQuizId($userId,$quizId);
@@ -29,9 +37,9 @@ class QuizAttemptService
         }
     }
 
-    public function getLeaderboardsPerMonth() {
+    public function getLeaderboardsPerMonth($take = 10) {
         try {
-            return $this -> quizAttemptRepositoryInterface->findLeaderboardPerMonth();
+            return $this -> quizAttemptRepositoryInterface->findLeaderboardPerMonth($take);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -45,9 +53,25 @@ class QuizAttemptService
         }
     }
 
-    public function getUserHistoryQuizAttemptGroupByMonth() {
+    public function getUserHistoryTotalQuizAttemptGroupByMonth() {
         try {
-            return $this -> quizAttemptRepositoryInterface -> findUserHistoryQuizAttemptGroupByMonth();
+            return $this -> quizAttemptRepositoryInterface -> findUserHistoryTotalQuizAttemptGroupByMonth();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function getHistoryTotalQuizAttemptGroupByMonth() {
+        try {
+            return $this -> quizAttemptRepositoryInterface -> findHistoryTotalQuizAttemptGroupByMonth();
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function getQuizAttemptGroupByStatusInThisMonth() {
+        try {
+            return $this -> quizAttemptRepositoryInterface -> findQuizAttemptGroupByStatusInThisMonth();
         } catch (\Throwable $th) {
             throw $th;
         }

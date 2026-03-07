@@ -24,12 +24,19 @@ class UserPage extends Component
     public $password;
     public bool $showCreateUserForm = false;
     public bool $showUpdateUserForm = false;
+    public $usersData;
 
 
     #[Url(as: 'search', except: '')]
     public string $search = '';
 
     public int $perPage = 10;
+
+    public function mount() {
+        $userService = app(UserService::class);
+
+        $this -> usersData = $userService -> getAllUser();
+    }
 
     public function placeholder() {
         return view('components.loading');

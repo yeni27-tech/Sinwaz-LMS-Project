@@ -15,6 +15,15 @@ class DivisiRepository implements DivisiRepositoryInterface
         return $data;
    }
 
+    public function findAllDivisiPagination($search ='', int $perPage = 10)
+    {
+        return Divisi::query()
+            ->when($search, function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate($perPage);
+    }
    public function findAllDivisisWithoutPagination()
    {
         $data = Divisi::get();
@@ -23,7 +32,7 @@ class DivisiRepository implements DivisiRepositoryInterface
    }
 
    public function findDivisiById($id) {
-        $data = Divisi::lazyById($id);
+        $data = Divisi::findOrFail($id);
 
         return $data;
    }

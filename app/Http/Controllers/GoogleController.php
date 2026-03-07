@@ -61,6 +61,6 @@ class GoogleController extends Controller
 
         $request->session()->regenerateToken(); // Regenerates the CSRF token for security
 
-        return redirect('/'); // Redirect the user to the desired page (e.g., home or login)
+        return redirect() -> route('login'); // Redirect the user to the desired page (e.g., home or login)
     }
 }

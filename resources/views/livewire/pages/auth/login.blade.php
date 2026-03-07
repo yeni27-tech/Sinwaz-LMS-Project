@@ -4,6 +4,7 @@ use App\Livewire\Auth\Components\LoginForm;
 use Illuminate\Support\Facades\Session;
 use Livewire\Attributes\Layout;
 use Livewire\Volt\Component;
+use App\Services\UserService;
 
 new #[Layout('layouts.auth')] class extends Component
 {
@@ -12,17 +13,33 @@ new #[Layout('layouts.auth')] class extends Component
     /**
      * Handle an incoming authentication request.
      */
-    public function login(): void
+    public function login()
     {
+        $this->dispatch('updateTitle', ['title' => 'Logged In - Your App Name']);
+
+        $userService = app(UserService::class);
         $this->validate();
+        $user = $userService -> getUserByEmail($this -> form->email);
+
+        // dd($validated['email']);
 
         $this->form->authenticate();
-
+        // if ($this->form->authenticate()) {
         Session::regenerate();
 
-        $this->redirectIntended(default: route('dashboard', absolute: false), navigate: true);
+        if($user -> role == "admin") {
+            return redirect() -> route('dashboard.admin');
+        }
+
+        if($user -> role == "employee") {
+            return redirect() -> route('employee.home');
+        }
+
+        return redirect() -> route('home');
     }
 }; ?>
+
+
 
 <div class=" absolute bottom-0 left-0 right-0 bg-slate-50 px-7 py-10 rounded-t-3xl flex flex-col gap-4">
     <!-- Session Status -->
@@ -88,5 +105,8 @@ new #[Layout('layouts.auth')] class extends Component
     </form>
 </div>
 
+<script>
+    document.title ="Login"
+</script>
 
-{{-- <a href="{{ route('google.auth.login') }}">Login with Google</a> --}}
+

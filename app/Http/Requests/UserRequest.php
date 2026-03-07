@@ -31,6 +31,7 @@ class UserRequest extends FormRequest
                 'divisi_id' => ['required', 'exists:divisis,id'],
                 'email' => ['required', 'email','unique:users,email'],
                 'password' => ['required', 'min:8','string'],
+                'role' => ['string', 'required'],
             ];
         };
 
@@ -40,6 +41,7 @@ class UserRequest extends FormRequest
                 'divisi_id' => ['required', 'exists:divisis,id'],
                 'email' => ['required', 'email'],
                 'password' => ['required', 'min:8','string'],
+                'role' => ['string', 'required'],
             ];
     }
 

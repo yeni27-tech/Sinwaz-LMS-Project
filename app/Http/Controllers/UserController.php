@@ -16,18 +16,31 @@ class UserController
         return view('pages.dashboard.admin.user');
     }
 
+    public function create() {
+        return view('pages.dashboard.admin.user.create-user');
+    }
+
+    public function edit($id) {
+        return view('pages.dashboard.admin.user.update-user');
+    }
 
     public function store(UserRequest $request) {
-        $vali = $this ->userService->postUser($request -> toDTO());
+        $this ->userService->postUser($request -> toDTO());
 
-        dd($vali);
+
+        return redirect()->route('dashboard.admin.user');
+
     }
 
     public function update($id, UserRequest $request) {
-        return $this -> userService -> putUser($id,$request -> toDTO());
+        $this -> userService -> putUser($id,$request -> toDTO());
+
+        return redirect()->route('dashboard.admin.user');
     }
 
     public function destroy($id) {
-        return $this -> userService -> deleteUser($id);
+         $this -> userService -> deleteUser($id);
+        return redirect()->route('dashboard.admin.user');
+
     }
 }

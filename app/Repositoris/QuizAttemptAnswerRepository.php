@@ -28,6 +28,6 @@ class QuizAttemptAnswerRepository implements QuizAttemptAnswerRepositoryInterfac
     }
 
     public function findQuizAttemptAnswersByQuizAttemptId($quizAttemptId) {
-        return QuizAttemptAnswer::where('quiz_attempt_id', $quizAttemptId) -> get();
+        return QuizAttemptAnswer::where('quiz_attempt_id', $quizAttemptId) -> orderBy('question_id', 'asc') ->get();
     }
 }

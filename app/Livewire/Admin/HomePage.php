@@ -27,6 +27,8 @@ class HomePage extends Component
     public $quizAttempts;
     public $quizAttemptGroupByStatusCount;
     public $quizService;
+    public $top3Leaderboards;
+    public $historyTotalQuizAttemptGroupByMonth;
     public function mount() {
         $quizService = app(QuizService::class);
         $jobService = app(JobService::class);
@@ -44,7 +46,9 @@ class HomePage extends Component
         $this->allMaterials = $materialService->getMaterialsWithoutPagination();
         $this->allQuizAttempts = $quizAttemptService->getQuizAttemptsWithoutPagination();
         $this->allDivisis = $divisiService->getDivisis();
-        $this->topQuizzes = $quizService->getTopQuizzesInThisMonth();
+        $this->topQuizzes = $quizService->getTopQuizzesInThisMonth(3);
+        $this -> top3Leaderboards = $quizAttemptService -> getLeaderboardsPerMonth(3);
+        // $this -> historyTotalQuizAttemptGroupByMonth = $quizAttemptService -> getHistoryTotalQuizAttemptGroupByMonth();
     }
 
     public function placeholder() {

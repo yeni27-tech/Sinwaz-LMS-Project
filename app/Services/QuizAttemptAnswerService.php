@@ -20,9 +20,9 @@ class QuizAttemptAnswerService
 
         if($answerExist -> count() <= 0) {
             $this ->quizAttemptAnswerRepositoryInterface -> createQuizAttemptAnswerByPick($quizAttemptAnswerRequQuizAttemptAnswerRequest);
+        } else {
+            $this ->quizAttemptAnswerRepositoryInterface -> updateQuizAttemptAnswerByPick($answerExist -> first() -> id,$quizAttemptAnswerRequQuizAttemptAnswerRequest);
         }
-
-        $this ->quizAttemptAnswerRepositoryInterface -> updateQuizAttemptAnswerByPick($answerExist[0] -> id,$quizAttemptAnswerRequQuizAttemptAnswerRequest);
     }
 
     public function getQuizAttemptAnswersByQuizAttemptId($quizAttemptId) {

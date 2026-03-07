@@ -3,6 +3,7 @@
 namespace App\Livewire\Admin\Components;
 
 use App\DTO\UserRequestDTO;
+use App\Http\Requests\UserRequest;
 use App\Services\DivisiService;
 use App\Services\UserService;
 use Livewire\Attributes\Computed;
@@ -19,7 +20,7 @@ class CreateUserForm extends Component
     public $divisi_id;
     public $number_phone;
     public $password;
-    public $showCreateUserForm = true;
+    public $showCreateUserForm = false;
 
     public function mount($showCreateUserForm) {
         $this->showCreateUserForm = $showCreateUserForm;
@@ -52,9 +53,11 @@ class CreateUserForm extends Component
 
         ]);
 
+        $userRequest = new UserRequest();
+
         $this -> showCreateUserForm= false;
 
-        $userService -> postUser($dto);
+        $userService -> postUser($userRequest -> toDTO());
 
         return redirect()->route('dashboard.admin.user');
 

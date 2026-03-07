@@ -3,10 +3,8 @@
 namespace App\Livewire\Admin\Components;
 
 use App\DTO\CourseRequestDTO;
-use App\DTO\UserRequestDTO;
 use App\Services\CourseService;
 use App\Services\DivisiService;
-use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Attributes\Computed;
 use Livewire\Component;
@@ -20,10 +18,9 @@ class CreateCourseForm extends Component
     public $name;
     public $divisi_id;
     public $description;
-    public $showCreateCourseForm = true;
+    public $showCreateCourseForm = false;
 
-    public function mount($showCreateCourseForm) {
-        $this->showCreateCourseForm = $showCreateCourseForm;
+    public function mount() {
     }
 
     public function placeholder() {

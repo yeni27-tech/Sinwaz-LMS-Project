@@ -17,7 +17,7 @@ class CourseDetailPage extends Component
 
         $this -> id = $id;
         $this -> courseById = $courseService -> getCourseById($this ->id);
-        $this -> materialsData = $materialService -> getMaterialsWithoutPagination() -> where("course_id", $this -> id);
+        $this -> materialsData = $materialService -> getAllMaterialByCourseId($this -> id);
     }
 
     public function placeholder() {

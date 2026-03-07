@@ -3,9 +3,10 @@ use App\Http\Controllers\CourseController;
 use App\Http\Controllers\HomePageController;
 use App\Http\Controllers\MaterialController;
 use App\Http\Controllers\QuizController;
+use App\Http\Middleware\EmployeeMiddleware;
 use Illuminate\Support\Facades\Route;
 
-// Route::prefix('dashboard')->group(function () {
+Route::middleware([EmployeeMiddleware::class])->group(function () {
     Route::prefix('employee')->group(function () {
         Route::get('/', [HomePageController::class,'employeeDashboard']) -> name('employee.home');
 
@@ -23,6 +24,5 @@ use Illuminate\Support\Facades\Route;
         Route::get('/course/{id}', [CourseController::class, 'courseDetail']) -> name('course.detail');
 
         Route::get('/material/{id}', [MaterialController::class, 'materialDetail']) -> name('material.detail');
-
     });
-// });
+});

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\DTO\MaterialRequestDTO;
 use App\Interfaces\MaterialRepositoryInterface;
+use SweetAlert2\Laravel\Swal;
 
 class MaterialService
 {
@@ -29,6 +30,24 @@ class MaterialService
         }
     }
 
+    public function getAllMaterialByCourseId($courseId) {
+        try {
+            return $this -> materialRepositoryInterface -> findAllMaterialByCourseId($courseId);
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
+    public function getMaterialsPagination(string $search = '', int $perPage = 10) {
+        try {
+            $materials = $this->materialRepositoryInterface->findAllMaterialPagination($search, $perPage);
+
+            return $materials;
+        } catch (\Throwable $th) {
+            throw $th;
+        }
+    }
+
     public function getMaterialById($id) {
         try {
             return $this -> materialRepositoryInterface -> findMaterialById($id);
@@ -39,7 +58,11 @@ class MaterialService
 
     public function postMaterial(MaterialRequestDTO $request) {
         try {
-            return $this -> materialRepositoryInterface -> createMaterial($request);
+            $this -> materialRepositoryInterface -> createMaterial($request);
+
+            Swal::success([
+                'title' => 'Create Material Successfully'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -47,7 +70,11 @@ class MaterialService
 
     public function putMaterial($id, MaterialRequestDTO $request) {
         try {
-          return  $this -> materialRepositoryInterface -> updateMaterial($id,$request);
+          $this -> materialRepositoryInterface -> updateMaterial($id,$request);
+
+            Swal::success([
+                'title' => 'Update Material Successfully'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -56,6 +83,10 @@ class MaterialService
     public function deleteMaterial($id) {
         try {
             $this -> materialRepositoryInterface -> removeMaterial($id);
+
+              Swal::success([
+                'title' => 'Delete Material Successfully'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -30,23 +30,39 @@ class CourseController extends Controller
         return view("pages.dashboard.admin.course", compact("courses"));
     }
 
+    public function adminCourseDetail($id) {
+        return view('pages.dashboard.admin.course-detail');
+    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    public function create() {
+        return view("pages.dashboard.admin.course.create-course");
+    }
+
+    public function edit() {
+        return view("pages.dashboard.admin.course.update-course");
+    }
+
     public function store(CourseRequest $request)
     {
-         return $this -> courseService -> postCourse(Auth::user() -> id,$request->toDTO());
+         $this -> courseService -> postCourse(Auth::user() -> id,$request->toDTO());
+
+        return redirect()->route("dashboard.admin.course");
+
     }
 
     public function update($id, CourseRequest $request)
     {
-         return $this ->courseService -> putCourse($id,Auth::user() -> id,$request->toDTO());
+          $this ->courseService -> putCourse($id,Auth::user() -> id,$request->toDTO());
+
+          return redirect()->route("dashboard.admin.course");
     }
 
 
     public function destroy($id)
     {
-        return $this -> courseService -> deleteCourse($id);
+        $this -> courseService -> deleteCourse($id);
+
+          return redirect()->route("dashboard.admin.course");
+
     }
 }

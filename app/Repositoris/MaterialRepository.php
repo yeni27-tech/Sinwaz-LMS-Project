@@ -13,8 +13,23 @@ class MaterialRepository implements MaterialRepositoryInterface
         return Material::lazy();
     }
 
+    public function findAllMaterialByCourseId($courseId)
+    {
+        return Material::all() -> where('course_id', $courseId);
+    }
+
     public function findMaterialsWithoutPagination() {
         return Material::get();
+    }
+
+    public function findAllMaterialPagination(string $search = '', int $perPage = 10)
+    {
+        return Material::query()
+            ->when($search, function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%");
+            })
+            ->latest()
+            ->paginate($perPage);
     }
 
     public function findMaterialById($materialId)

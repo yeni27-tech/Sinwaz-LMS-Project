@@ -13,7 +13,7 @@ class ProfilePage extends Component
         $quizAttemptService = app(QuizAttemptService::class);
         // $quizAttempt = app(QuizAttemptService::class);
 
-        $this->historyQuizAttemptsGroupByMonth = $quizAttemptService -> getUserHistoryQuizAttemptGroupByMonth();
+        $this->historyQuizAttemptsGroupByMonth = $quizAttemptService -> getUserHistoryTotalQuizAttemptGroupByMonth();
 
         $this->quizAttemptData = $quizAttemptService -> getUserHistoryQuizAttempt();
     }

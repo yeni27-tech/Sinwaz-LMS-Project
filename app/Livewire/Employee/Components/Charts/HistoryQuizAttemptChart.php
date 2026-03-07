@@ -16,7 +16,7 @@ class HistoryQuizAttemptChart extends Component
     public function mount() {
         $quizAttemptService = app(QuizAttemptService::class);
 
-        $this->historyQuizAttemptsGroupByMonth = $quizAttemptService -> getUserHistoryQuizAttemptGroupByMonth();
+        $this->historyQuizAttemptsGroupByMonth = $quizAttemptService -> getUserHistoryTotalQuizAttemptGroupByMonth();
 
         for ($i = 0; $i < $this->historyQuizAttemptsGroupByMonth -> count(); $i++) {
             $this->totalAttemptPerMonth[$i] = $this -> historyQuizAttemptsGroupByMonth[$i]->total;

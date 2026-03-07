@@ -34,7 +34,7 @@ new #[Layout('layouts.auth')] class extends Component
 
         Auth::login($user);
 
-        $this->redirect(route('dashboard', absolute: false), navigate: true);
+        $this->redirect(route('home', absolute: false), navigate: true);
     }
 }; ?>
 
@@ -98,3 +98,7 @@ new #[Layout('layouts.auth')] class extends Component
         </div>
     </form>
 </div>
+
+<script>
+    document.title ="Register"
+</script>

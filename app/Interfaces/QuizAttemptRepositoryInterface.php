@@ -10,9 +10,12 @@ interface QuizAttemptRepositoryInterface
     public function findQuizAttempts();
     public function findLatestQuizAttemptByUserIdAndQuizId($userId,$quizId);
     public function findQuizAttemptsGroupByStatusInThisMonth();
-    public function findLeaderboardPerMonth();
+    public function findLeaderboardPerMonth($take = 10);
     public function findUserHistoryQuizAttempt();
-    public function findUserHistoryQuizAttemptGroupByMonth();
+    public function findQuizAttemptGroupByStatusInThisMonth();
+    public function findQuizAttemptByUserId($userId);
+    public function findUserHistoryTotalQuizAttemptGroupByMonth();
+    public function findHistoryTotalQuizAttemptGroupByMonth();
     public function findUserHistoryTotalQuizScoreGroupByMonth();
     public function findQuizAttemptsWithoutPagination();
     public function createQuizAttempt(QuizAttemptRequestDTO $data);

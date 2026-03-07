@@ -1,6 +1,7 @@
 <div>
-    <div class="p-4 md:p-6 space-y-6">
-            <!-- HERO -->
+    <livewire:components.sidebar-top />
+
+    <div class="p-4 md:p-6 space-y-6 mt-4">            <!-- HERO -->
 
             <!-- QUICK KPIs -->
 
@@ -10,7 +11,7 @@
                 <a href="{{ route("dashboard.admin.quiz.create") }}" class=" bg-blue-500 px-4 py-2 rounded-md text-slate-50 font-bold">Tambah Data</a>
             </section>
 
-            <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
+            <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
                 <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div class="flex items-center justify-between">
                         <div>
@@ -94,7 +95,7 @@
         </section>
 
         <!-- TABLES -->
-        <section class="grid gap-4">
+        <section class="grid gap-4 p-7">
             <div class="xl:col-span-2 bg-white border border-slate-200 rounded-2xl overflow-hidden shadow-sm">
                 <div class="p-4 flex items-start justify-between gap-3">
                     <div>
@@ -129,10 +130,11 @@
                 </div>
             </div>
 
-            <div class="border-t border-slate-200">
+            <div class="border-t border-slate-200 ">
                 <table class="w-full text-sm">
-                    <thead class="bg-slate-50 text-slate-600">
+                    <thead class="bg-slate-900 text-slate-50">
                         <tr>
+                            <th class="text-left px-4 py-3 font-semibold">No</th>
                             <th class="text-left px-4 py-3 font-semibold">Name</th>
                             <th class="text-left px-4 py-3 font-semibold">Divisi</th>
                             <th class="text-left px-4 py-3 font-semibold">Total Attemp</th>
@@ -144,6 +146,7 @@
                     <tbody class="divide-y divide-slate-200">
                         @forelse($this -> quizzesPagination as $quiz)
                         <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-semibold">{{ $loop -> iteration}}</td>
                             <td class="px-4 py-3 font-semibold">{{ $quiz->name }}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $quiz -> divisi_id != null ? $quiz -> divisi -> name  : 'None'}}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $quiz->quizAttempt -> count() }}</td>
@@ -155,25 +158,30 @@
                                 @endif
                             </td>
                             <td class="px-4 py-3 text-right flex flex-row gap-2">
-                                    <button
-                                    id="delete-btn-{{ $quiz -> id }}"
-                                    wire:click="deleteQuiz({{ $quiz -> id }})"
-                                    {{-- onclick="handleOnDelete(event, {{ $quiz -> id }})" --}}
-                                    >
+                                <form id="form-quiz-{{ $quiz -> id }}" action="{{ route('quiz.destroy', ['id' => $quiz -> id]) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                </form>
 
-                                        <x-icon.trash :width="18" height="18" />
-                                    </button>
                                 <a href="{{ route('dashboard.admin.quiz.detail', ['id' => $quiz -> id]) }}"
                                 class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:bg-slate-50 transition"
                                 >
                                     <x-icon.pen :width="18" height="18" />
                                 </a>
+                                    <button
+                                    id="delete-btn-{{ $quiz -> id }}"
+                                    type="button"
+                                    onclick="handleOnDelete('form-quiz-{{ $quiz -> id }}')"
+                                    >
+
+                                        <x-icon.trash :width="18" height="18" />
+                                    </button>
                             </td>
                         </tr>
                         @empty
                         <tr>
                             <td colspan="4" class="px-4 py-6 text-center text-sm text-slate-500">
-                                No users found.
+                                No quizzes found.
                             </td>
                         </tr>
                         @endforelse

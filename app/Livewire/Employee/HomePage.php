@@ -23,17 +23,25 @@ class HomePage extends Component
     public $quizDuration;
     public $quizzesData;
     public $coursesData;
+    public $quizAttemptData;
+    public $totalMaterialsData;
 
     public function mount() {
         $quizService = app(QuizService::class);
         $courseService = app(CourseService::class);
+        $quizAttemptService = app(QuizAttemptService::class);
 
         $quizzesData = $quizService -> getAllQuizzes() -> where('divisi_id', 4);
         $coursesData = $courseService -> getCoursesWithoutPagination() -> where('divisi_id', 4);
 
         $this->quizzesData = $quizzesData;
         $this->coursesData = $coursesData;
+        $this->quizAttemptData = $quizAttemptService ->getQuizAttemptByUserId(Auth::user()->id);
 
+
+        foreach ($this->coursesData as $course) {
+            $this->totalMaterialsData += $course->material->count();
+        }
     }
 
     public function placeholder() {

@@ -25,7 +25,7 @@ class CourseRequest extends FormRequest
         return [
             "divisi_id"=> ['required','exists:divisis,id'],
             'name' => ['required','string'],
-            'description' => ['required','string'],
+            'description' => [''],
         ];
     }
 

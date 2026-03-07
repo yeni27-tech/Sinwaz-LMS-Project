@@ -4,6 +4,9 @@ namespace App\Services;
 
 use App\DTO\QuizRequestDTO;
 use App\Interfaces\QuizRepositoryInterface;
+use SweetAlert2\Laravel\Swal;
+
+use function Livewire\Volt\title;
 
 class QuizService
 {
@@ -18,15 +21,16 @@ class QuizService
     }
 
     public function putQuiz($id, QuizRequestDTO $quizRequestDTO) {
-        return $this -> quizRepositoryInterface -> updateQuiz($id, $quizRequestDTO);
+        $this -> quizRepositoryInterface -> updateQuiz($id, $quizRequestDTO);
+
     }
 
     public function getQuizzes() {
         return $this -> quizRepositoryInterface -> findQuizzes();
     }
 
-    public function getTopQuizzesInThisMonth() {
-        return $this -> quizRepositoryInterface -> findTop10nQuizzes();
+    public function getTopQuizzesInThisMonth($take = 10) {
+        return $this -> quizRepositoryInterface -> findTopQuizzesPerMonth($take);
     }
 
     public function activatedQuiz($id) {
@@ -54,6 +58,10 @@ class QuizService
     }
 
     public function deleteQuiz($id) {
-        return $this -> quizRepositoryInterface -> removeQuiz($id);
+        $this -> quizRepositoryInterface -> removeQuiz($id);
+
+        Swal::success([
+            'title' => 'Delete Quiz Successfully'
+        ]);
     }
 }

@@ -1,16 +1,15 @@
 <div>
-    <div class="p-4 md:p-6 space-y-6">
-            <!-- HERO -->
+    <livewire:components.sidebar-top />
+
+    <div class="p-4 md:p-6 space-y-6 mt-4">            <!-- HERO -->
 
             <!-- QUICK KPIs -->
 
             <section class=" flex flex-row items-center justify-between">
                 <h1 class=" font-bold text-4xl">Table Courses</h1>
 
-                <button wire:click="openCreateCourseForm" type="button" class=" bg-blue-500 px-4 py-2 rounded-md text-slate-50 font-bold">Tambah Data</button>
+                <a href="{{ route('dashboard.admin.course.create') }}" class=" bg-blue-500 px-4 py-2 rounded-md text-slate-50 font-bold">Tambah Data</a>
             </section>
-
-
 
         <!-- TABLES -->
         <section class="grid gap-4">
@@ -26,7 +25,7 @@
                         <div class="relative">
                             <input
                             type="text"
-                            placeholder="Search user..."
+                            placeholder="Search course..."
                             wire:model.live.debounce.300ms="search"
                             class="w-56 px-3 py-2 rounded-xl border border-slate-200 bg-white text-sm font-semibold placeholder:text-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
                             />
@@ -50,9 +49,10 @@
 
             <div class="border-t border-slate-200">
                 <table class="w-full text-sm">
-                    <thead class="bg-slate-50 text-slate-600">
+                    <thead class="bg-slate-900 text-slate-50">
                         <tr>
-                            <th class="text-left px-4 py-3 font-semibold">Name</th>
+                            <th class="text-left px-4 py-3 font-semibold">No</th>
+                            <th class="text-left px-4 py-3 font-semibold">Nama</th>
                             <th class="text-left px-4 py-3 font-semibold">Tutor</th>
                             <th class="text-left px-4 py-3 font-semibold">Divisi</th>
                             <th class="text-left px-4 py-3 font-semibold">Description</th>
@@ -64,35 +64,46 @@
                     <tbody class="divide-y divide-slate-200">
                         @forelse($this -> coursePagination as $course)
                         <tr class="hover:bg-slate-50">
+                            <td class="px-4 py-3 font-semibold">{{ $loop->iteration }}</td>
                             <td class="px-4 py-3 font-semibold">{{ $course->name }}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $course -> tutor_id != null ? $course -> tutor -> name  : 'None'}}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $course -> divisi_id != null ? $course -> divisi -> name  : 'None'}}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $course->description }}</td>
                             <td class="px-4 py-3 text-slate-600">{{ $course->material -> count() }}</td>
                             <td class="px-4 py-3 text-right flex flex-row gap-2">
+                                 <form id="form-course-{{ $course -> id }}" action="{{ route('course.destroy', ['id' => $course -> id]) }}" method="post">
+                                    @csrf
+                                    @method('delete')
+                                </form>
+                                    <a href="{{ route('dashboard.admin.course.detail', ['id' => $course -> id]) }}"
+                                    class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:bg-slate-50 transition"
+                                    >
+                                        <x-icon.plus :width="18" height="18" />
+                                    </a>
+
+                                    <a href="{{ route('dashboard.admin.course.edit', ['id' => $course -> id]) }}"
+                                    class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:bg-slate-50 transition"
+                                    >
+                                        <x-icon.pen :width="18" height="18" />
+                                    </a>
+
                                     <button
                                     id="delete-btn-{{ $course -> id }}"
-                                    wire:click="deleteCourse({{ $course -> id }})"
+                                    type="button"
+                                    class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:bg-slate-50 transition"
+                                    {{-- onclick="confirm('tes {{ $course->id }}')" --}}
+                                    onclick="handleOnDelete('form-course-{{ $course -> id }}')"
+                                    {{-- onclick="deleteConfirmation({{ $course -> id }})" --}}
                                     {{-- onclick="handleOnDelete(event, {{ $course -> id }})" --}}
                                     >
 
                                         <x-icon.trash :width="18" height="18" />
                                     </button>
 
-                                <button type="button"
-                                wire:click="openUpdateCourseForm(
-                                    @js($course->id),
-                                    @js($course->name),
-                                    @js($course->description),
-                                    @js($course->divisi_id),
-                                )"
-                                class="px-3 py-2 rounded-xl border border-slate-200 bg-white text-xs font-semibold hover:bg-slate-50 transition"
-                                >
-                                    View
-                                </button>
                             </td>
                         </tr>
                         @empty
+                        
                         <tr>
                             <td colspan="4" class="px-4 py-6 text-center text-sm text-slate-500">
                                 No courses found.
@@ -156,15 +167,4 @@
             </div>
         </section>
     </div>
-
-       @if ($this -> showCreateCourseForm)
-         <div>
-            <livewire:admin.components.create-course-form showCreateCourseForm="{{ $this -> showCreateCourseForm }}" />
-        </div>
-
-    @elseif ($this -> showUpdateCourseForm)
-        <div >
-            <livewire:admin.components.update-course-form id="{{ $this -> id }}"  name="{{ $this -> name }}" description="{{ $this -> description }}" divisi_id="{{ $this -> divisi_id }}" />
-        </div>
-    @endif
 </div>

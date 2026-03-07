@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTO\JobRequestDTO;
 use App\Interfaces\JobRepositoryInterface;
 use Illuminate\Support\Facades\Auth;
+use SweetAlert2\Laravel\Swal;
 
 class JobService
 {
@@ -47,9 +48,12 @@ class JobService
 
     public function postJob($jobMakerId, JobRequestDTO $request) {
         try {
-            $newJob = $this->jobRepositoryInterface->createJob($jobMakerId,$request);
+            $this->jobRepositoryInterface->createJob($jobMakerId,$request);
 
-            return $newJob;
+            Swal::success([
+                'title' => 'Create Job Successfully'
+            ]);
+
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -58,6 +62,11 @@ class JobService
     public function putJob($id, $jobMakerId, JobRequestDTO $request) {
         try {
             $this->jobRepositoryInterface->updateJob($id,$jobMakerId,$request);
+
+            Swal::success([
+                'title' => 'Update Job Successfully'
+            ]);
+
         } catch (\Throwable $th) {
             throw $th;
         }
@@ -66,6 +75,10 @@ class JobService
       public function deleteJob($id) {
         try {
             $this->jobRepositoryInterface-> removeJob($id);
+
+            Swal::success([
+                'title' => 'Delete Job Successfully'
+            ]);
         } catch (\Throwable $th) {
             throw $th;
         }

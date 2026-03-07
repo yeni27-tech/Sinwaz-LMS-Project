@@ -1,5 +1,7 @@
-<div>
-    <div class="p-4 md:p-6 space-y-6">
+<div class=" relative">
+    <div class="space-y-6">
+        <livewire:components.sidebar-top />
+
         <!-- HERO -->
         <section class="bg-gradient-to-r from-blue-600 to-slate-900 rounded-3xl p-5 md:p-6 text-white overflow-hidden relative">
             <div class="  h-40 w-40 rounded-full bg-white/10"></div>
@@ -15,32 +17,11 @@
             </div>
         </section>
 
-        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
-            <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-                <div class="flex items-center justify-between">
-                    <div>
-                        <div class="text-sm font-semibold text-slate-700">Available Quiz</div>
-                        <div class="text-xs text-slate-500">Published Quizs</div>
-                    </div>
-                    <div class="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
-                        <svg class="h-5 w-5 text-blue-700" viewBox="0 0 24 24" fill="none">
-                            <path d="M6 7h12v14H6V7z" stroke="currentColor" stroke-width="2"/>
-                            <path d="M7 3h10v4H7V3z" stroke="currentColor" stroke-width="2"/>
-                        </svg>
-                    </div>
-                </div>
-                <div class="mt-3 flex items-end justify-between">
-                    <div class="text-3xl font-semibold">{{ 1 }}</div>
-                </div>
-                <div class="mt-2 flex gap-2">
-                    <span class="text-xs font-semibold px-2 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-100">published</span>
-                </div>
-            </div>
-
+        <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-4">
                 <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
-                        <div class="text-sm font-semibold text-slate-700">Active Quiz</div>
+                        <div class="text-sm font-semibold text-slate-700">Available Quiz</div>
                         <div class="text-xs text-slate-500">Published Divisi Quiz</div>
                     </div>
                     <div class="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
@@ -51,7 +32,7 @@
                     </div>
                 </div>
                 <div class="mt-3 flex items-end justify-between">
-                    <div class="text-3xl font-semibold">{{1}}</div>
+                    <div class="text-3xl font-semibold">{{$this -> quizzesData -> count()}}</div>
                 </div>
                 <div class="mt-2 flex gap-2">
                     <span class="text-xs font-semibold px-2 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-100">published</span>
@@ -61,8 +42,8 @@
             <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                 <div class="flex items-center justify-between">
                     <div>
-                        <div class="text-sm font-semibold text-slate-700">Quiz Attempted</div>
-                        <div class="text-xs text-slate-500">Total quiz what you've finished</div>
+                        <div class="text-sm font-semibold text-slate-700">Total Course</div>
+                        <div class="text-xs text-slate-500">Total available course </div>
                     </div>
                     <div class="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
                         <svg class="h-5 w-5 text-blue-700" viewBox="0 0 24 24" fill="none">
@@ -72,7 +53,28 @@
                     </div>
                 </div>
                 <div class="mt-3 flex items-end justify-between">
-                    <div class="text-3xl font-semibold">{{2}}</div>
+                    <div class="text-3xl font-semibold">{{$this -> coursesData -> count()}}</div>
+                </div>
+                <div class="mt-2 flex gap-2">
+                    <span class="text-xs font-semibold px-2 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-100">published</span>
+                </div>
+            </div>
+
+            <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <div class="text-sm font-semibold text-slate-700">Total Materials</div>
+                        <div class="text-xs text-slate-500">Total available material in all courses </div>
+                    </div>
+                    <div class="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
+                        <svg class="h-5 w-5 text-blue-700" viewBox="0 0 24 24" fill="none">
+                            <path d="M6 7h12v14H6V7z" stroke="currentColor" stroke-width="2"/>
+                            <path d="M7 3h10v4H7V3z" stroke="currentColor" stroke-width="2"/>
+                        </svg>
+                    </div>
+                </div>
+                <div class="mt-3 flex items-end justify-between">
+                    <div class="text-3xl font-semibold">{{$this -> totalMaterialsData}}</div>
                 </div>
                 <div class="mt-2 flex gap-2">
                     <span class="text-xs font-semibold px-2 py-1 rounded-lg bg-blue-50 text-blue-700 border border-blue-100">published</span>
@@ -85,13 +87,13 @@
                 <h1 class=" text-2xl font-bold">Quiz</h1>
             </div>
 
-            <div class=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class=" flex flex-row items-center w-11/ overflow-x-scroll gap-4">
                 @forelse ($this -> quizzesData as $quiz)
-                    <livewire:employee.components.cards.quiz-card quizId="{{$quiz -> id }}" quizName="{{$quiz -> name }}" divisiName="{{$quiz -> divisi -> name }}" quizDuration="{{ $quiz -> duration }}" />
+                    <livewire:employee.components.cards.quiz-card quizId="{{$quiz -> id }}"  />
 
                     @empty
                     <div>
-                        empty
+                        Data quiz is empty
                     </div>
                 @endforelse
             </div>
@@ -102,12 +104,12 @@
                 <h1 class=" text-2xl font-bold">Courses</h1>
             </div>
 
-            <div class=" grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            <div class=" flex flex-row items-center overflow-x-scroll gap-4">
                 @forelse ($this -> coursesData as $course)
                     <livewire:employee.components.cards.course-card :id="$course -> id" />
                 @empty
                     <div>
-                        empty
+                        Data course is empty
                     </div>
                 @endforelse
             </div>
@@ -121,6 +123,7 @@
 
     </section>
     @endif
+
 </div>
 
 

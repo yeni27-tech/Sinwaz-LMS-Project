@@ -60,7 +60,38 @@ class QuizAttemptRepository implements QuizAttemptRepositoryInterface
         return $history;
    }
 
-   public function findUserHistoryQuizAttemptGroupByMonth()
+   public function findQuizAttemptGroupByStatusInThisMonth() {
+        $data = QuizAttempt::selectRaw('status, count(*) as total')
+                ->whereBetween('quiz_attempts.created_at', [$this -> start, $this -> end])
+                -> groupBy('status')
+                ->get();
+
+        // dd($data);
+        return $data;
+    }
+
+    public function findQuizAttemptByUserId($userId)
+    {
+        return QuizAttempt::all() -> where('user_id', $userId);
+    }
+
+   public function findHistoryTotalQuizAttemptGroupByMonth()
+   {
+        $start = Carbon::now()->subYear()->startOfYear()->toDateString();
+        $end = Carbon::now();
+
+        $data = QuizAttempt::selectRaw('MONTH(submitted_at) as month, count(*) as total')
+        ->whereBetween('quiz_attempts.submitted_at', [$start, $end])
+        -> groupBy('month')
+        -> orderBy('month')
+        ->get()
+        // ->pluck('total','month')
+        ;
+
+        // dd($data);
+        return $data;
+   }
+   public function findUserHistoryTotalQuizAttemptGroupByMonth()
    {
         $start = Carbon::now()->subYear()->startOfYear()->toDateString();
         $end = Carbon::now();
@@ -94,10 +125,10 @@ class QuizAttemptRepository implements QuizAttemptRepositoryInterface
    }
 
 
-   public function findLeaderboardPerMonth()
+   public function findLeaderboardPerMonth($take = 10)
    {
         $this -> start = Carbon::now()->startOfMonth();
-        $end   = Carbon::now()->endOfMonth();
+        $this -> end   = Carbon::now()->endOfMonth();
         $leaderboard = DB::table('quiz_attempts')
         ->join('users', 'users.id', '=', 'quiz_attempts.user_id')
         ->whereBetween('quiz_attempts.submitted_at', [$this -> start, $this -> end])
@@ -112,7 +143,7 @@ class QuizAttemptRepository implements QuizAttemptRepositoryInterface
         ])
         ->orderByDesc('total_score')
         ->orderByDesc('best_score') // tie breaker (optional)
-        ->take(10)
+        ->take($take)
         ->get();
 
         // dd($leaderboard);

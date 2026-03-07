@@ -32,7 +32,7 @@
 
         <div class=" container max-w-screen-sm mx-auto">
             <div class=" flex flex-col gap-4">
-                <div class=" w-full h-[200px] bg-gray-400 rounded-t-xl"></div>
+                <div class=" w-full h-[200px] bg-blue-600 rounded-t-xl"></div>
                 <div>
                     <x-text-input wire:model="form.name"
                     id="name"

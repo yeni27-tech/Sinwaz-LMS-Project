@@ -1,0 +1,88 @@
+<aside
+    class="{{ !$sidebarOpen ? 'translate-x-0' : '-translate-x-full' }} w-[400px] md:w-[350px] bg-white border-r border-slate-200 transition-transform duration-200  h-screen overflow-y-scroll flex flex-col justify-end z-50 absolute top-0 left-0"
+>
+    <div class="h-16 flex items-center justify-between px-6 border-b border-slate-200">
+        <div class="flex items-center gap-3">
+            <div class="h-10 w-10 rounded-xl bg-blue-600 shadow-sm"></div>
+            <div>
+                <div class="font-semibold leading-tight">
+                    {{-- {{ Auth::user() ->rhh name }} --}}
+                    Dashboard
+                </div>
+            </div>
+        </div>
+
+        <button
+            type="button"
+            class="md:hidden h-9 w-9 rounded-lg border border-slate-200 hover:bg-slate-50 transition"
+            wire:click="closeSidebar"
+            aria-label="Close sidebar"
+        >
+            <svg class="mx-auto h-5 w-5 text-slate-700" viewBox="0 0 24 24" fill="none">
+                <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+        </button>
+    </div>
+
+    <nav class="p-4 space-y-1">
+        <a href="{{ route('employee.home') }}"
+           class="flex items-center gap-3 px-3 py-2 rounded-xl {{ $this -> pathName == 'employee' ? 'text-blue-700 bg-blue-50' : '' }} border hover:border-blue-100">
+            <span class="h-9 w-9 rounded-lg bg-white border border-blue-100 flex items-center justify-center">
+                <svg class="h-5 w-5 " viewBox="0 0 24 24" fill="none">
+                    <path d="M3 10.5L12 3l9 7.5V21a1 1 0 01-1 1h-5v-7H9v7H4a1 1 0 01-1-1V10.5z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+                </svg>
+            </span>
+            <div>
+                <div class="text-sm font-semibold">Dashboard</div>
+            </div>
+        </a>
+
+        <a href="{{ route('employee.leaderboard') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-100 transition {{ $this -> pathName == 'employee/leaderboard' ? 'text-blue-700 bg-blue-50' : '' }}">
+            <span class="h-9 w-9 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center">
+                <svg class="h-5 w-5 " viewBox="0 0 24 24" fill="none">
+                    <path d="M4 19h16M7 16V8m5 8V5m5 11v-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+            </span>
+            <div>
+                <div class="text-sm font-semibold">Leaderboard</div>
+                <div class="text-xs">ranking & score</div>
+            </div>
+        </a>
+
+        <div class="pt-3 mt-3 border-t border-slate-200">
+            <a href="{{ route('employee.profile') }}" class="flex items-center gap-3 px-3 py-2 rounded-xl hover:bg-slate-100 transition {{ $this -> pathName == 'employee/profile' ? 'text-blue-700 bg-blue-50' : '' }}">
+                <span class="h-9 w-9 rounded-lg bg-slate-50 border border-slate-200 flex items-center justify-center">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#000000" viewBox="0 0 256 256"><path d="M230.92,212c-15.23-26.33-38.7-45.21-66.09-54.16a72,72,0,1,0-73.66,0C63.78,166.78,40.31,185.66,25.08,212a8,8,0,1,0,13.85,8c18.84-32.56,52.14-52,89.07-52s70.23,19.44,89.07,52a8,8,0,1,0,13.85-8ZM72,96a56,56,0,1,1,56,56A56.06,56.06,0,0,1,72,96Z"></path>
+                      </svg>
+                </span>
+
+                <div>
+                    <div class="text-sm font-semibold">Profile</div>
+                    <div class="text-xs text-slate-500">system config</div>
+                </div>
+            </a>
+        </div>
+    </nav>
+
+    <div class="mt-auto p-4 border-t border-slate-200">
+        <div class="flex items-center gap-3">
+            <div class="h-[40px] w-[50px] rounded-md bg-slate-900 text-slate-50 font-bold flex justify-center items-center">
+                {{ Auth::user() -> name[0] }}
+            </div>
+
+            <div class="min-w-0">
+                <div class="text-sm font-semibold truncate">
+                    {{ Auth::user() -> name }}
+                </div>
+                <div class="text-xs text-slate-500 truncate">
+                    {{ Auth::user() -> email }}
+                </div>
+            </div>
+
+            <a href="{{route('auth.logout')}}" class=" bg-red-600 text-slate-50 font-bold text-xs rounded-md px-2 py-1">
+                Logout
+            </a>
+        </div>
+    </div>
+</aside>
+
