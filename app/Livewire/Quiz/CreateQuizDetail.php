@@ -112,6 +112,8 @@ class CreateQuizDetail extends Component
             'title' => 'Update quiz successfully',
         ]);
 
+        return redirect() -> route('dashboard.admin.quiz.detail', ['id' => $id]);
+
     }
 
     #[Computed]

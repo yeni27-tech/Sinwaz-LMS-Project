@@ -4,7 +4,9 @@ namespace App\Repositoris;
 
 use App\DTO\QuizAttemptRequestDTO;
 use App\Interfaces\QuizAttemptRepositoryInterface;
+use App\Interfaces\UserRepositoryInterface;
 use App\Models\QuizAttempt;
+use App\Models\User;
 use Carbon\Carbon;
 use Date;
 use DateTime;
@@ -15,10 +17,12 @@ class QuizAttemptRepository implements QuizAttemptRepositoryInterface
 {
     public $start;
     public $end;
+    public $userRepositoryInterface;
 
     public function __construct() {
         $this->start = Carbon::now()->startOfMonth();
         $this->end = Carbon::now()->endOfMonth();
+        $this -> userRepositoryInterface = app(UserRepositoryInterface::class);
     }
    public function findQuizAttemptById($id)
    {
@@ -175,10 +179,19 @@ class QuizAttemptRepository implements QuizAttemptRepositoryInterface
 
    public function submitQuizAttempt($id, $score)
    {
-        return QuizAttempt::where("id", $id)->update([
-            'score' => $score,
+        $QuizAttemptById = $this -> findQuizAttemptById($id);
+        $user = $this -> userRepositoryInterface -> findUserById($QuizAttemptById -> user_id);
+
+        QuizAttempt::where('id', $id) -> update([
+            'submitted_at' => Carbon::now(),
             'status' => 'done',
-            'submitted_at' => new DateTime(),
+            'score' => $score,
         ]);
+
+        return User::where('id', $QuizAttemptById -> user_id) -> update([
+            'point' => $user -> point + $score
+        ]);
+
+
    }
 }

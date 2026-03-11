@@ -1,5 +1,5 @@
 <main class="h-screen  flex flex-row items-center">
-       <aside class=" h-screen lg:min-w-[250px] min-w-[200px] overflow-y-scroll w-fit bg-gray-100 p-3">
+       <aside class=" h-screen lg:min-w-[250px] min-w-[200px] overflow-y-scroll w-fit bg-slate-100 p-3">
             <div class=" flex flex-row items-center justify-between mb-4">
             <a href="{{ route('dashboard.admin.quiz') }}" class="flex flex-row items-center  gap-2">
                 <i class="ph ph-arrow-left"></i>
@@ -49,11 +49,11 @@
             <div class=" flex flex-col gap-4">
 
 
-                <form action="" wire:submit='putQuiz({{ $quizById -> id }})' class=" rounded-lg border border-slate-900 p-4 flex flex-col gap-4">
+                <form action="" wire:submit.prevent='putQuiz({{ $quizById -> id }})' class=" rounded-lg border border-slate-900 p-4 flex flex-col gap-4">
                     <div class=" flex flex-row items-center justify-between">
                         <div>
                             <h1 class=" font-bold text-2xl">Quiz Data</h1>
-                            <p class=" text-xs text-light">Update quiz data di sini</p>
+                            <p class=" text-xs text-light">Update quiz here</p>
                         </div>
 
                     </div>
@@ -66,20 +66,24 @@
                         <x-text-input wire:keydown.enter.prevent="" value="{{ $quizById -> name }}" type="text" class="outline-1" wire:model="name" />
                     </div>
 
-                            <div class=" flex flex-col gap-5">
-                                <div class=" flex flex-row gap-1 min-w-[150px]">
-                                    <i class="ph ph-dots-six-vertical font-bold text-slate-900 text-2xl"></i>
-                                    <x-input-label for="divisi_id" class=" font-bold text-lg" :value="__('Divisi_id')" />
+                            <div class=" flex flex-col gap-3">
+                                <div class=" flex flex-row gap-1 items-center min-w-[150px]">
+                                    {{-- <i class="ph ph-dots-six-vertical font-bold text-slate-900 text-2xl"></i> --}}
+                                    <x-input-label for="divisi_id" class=" font-bold text-lg" :value="__('Divisi')" />
                                 </div>
 
-                                <x-select wire:model="form.divisi_id" id="divisi_id" name="divisi_id" class=" w-11/12 truncate h-fit text-xs">
+                                <x-select wire:model="divisi_id" id="divisi_id" name="divisi_id" class=" w-11/12 truncate h-fit text-xs">
+                                    @if ($this -> quizById -> divisi_id != null)
+                                        <x-option-select value="{{ $this -> quizById -> divisi->id }}">{{ $this -> quizById -> divisi->name }}</x-option-select>
+                                    @endif
+
                                     @foreach ($this -> divisisData as $divisi)
                                         <x-option-select value="{{ $divisi->id }}">{{ $divisi->name }}</x-option-select>
                                     @endforeach
                                 </x-select>
                             </div>
 
-                        {{-- <x-input-error :messages="$errors->get('form.divisi')" class="mt-2" /> --}}
+                        {{-- <x-input-error :messages="$errors->get('divisi')" class="mt-2" /> --}}
     {{--
                     <div>
                         <div class=" flex flex-row items-center gap-5">
@@ -88,7 +92,7 @@
                                 <x-input-label for="duration" class=" font-bold text-lg" :value="__('Estimasi Waktu')" />
                             </div>
 
-                            <x-select wire:model="form.duration" id="duration" name="duration" class=" w-fit h-fit text-xs">
+                            <x-select wire:model="duration" id="duration" name="duration" class=" w-fit h-fit text-xs">
                                 <x-option-select value="1">1 hour</x-option-select>
                                 <x-option-select value="2">2 hours</x-option-select>
                             </x-select>

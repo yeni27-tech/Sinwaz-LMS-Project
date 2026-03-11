@@ -62,7 +62,7 @@
                         <tr class="hover:bg-slate-50">
                             <td class="px-4 py-3 font-semibold">{{ $loop->iteration }}</td>
                             <td class="px-4 py-3 font-semibold">{{ $divisi->name }}</td>
-                            <td class="px-4 py-3 text-right flex flex-row gap-2">
+                            <td class="px-4 py-3 text-right flex flex-row gap-2 justify-end">
                                  <form id="form-divisi-{{ $divisi -> id }}" action="{{ route('divisi.destroy', ['id' => $divisi -> id]) }}" method="post">
                                     @csrf
                                     @method('delete')

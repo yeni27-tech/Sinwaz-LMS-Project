@@ -51,7 +51,7 @@ class MaterialController extends Controller
      */
     public function store(MaterialRequest $request)
     {
-        $newMaterial = $this -> materialService -> postMaterial($request -> toDTO());
+        $this -> materialService -> postMaterial($request -> toDTO());
 
         return redirect() -> route('dashboard.admin.course');
     }
@@ -60,7 +60,7 @@ class MaterialController extends Controller
     {
         $this -> materialService -> putMaterial($id, $request -> toDTO());
 
-        return redirect() -> route('dashboard.admin.material');
+        return redirect() -> route('dashboard.admin.course');
     }
 
     /**
@@ -70,6 +70,6 @@ class MaterialController extends Controller
     {
         $this -> materialService -> deleteMaterial($id);
 
-        return redirect() -> route('dashboard.admin.material');
+        return redirect() -> route('dashboard.admin.course');
     }
 }

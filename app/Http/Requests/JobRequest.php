@@ -28,7 +28,7 @@ class JobRequest extends FormRequest
             'location' => ['required', 'string'],
             'education' => ['required', 'string'],
             'experience' => ['required', 'string'],
-            'description' => ['string'],
+            'description' => [''],
         ];
     }
 

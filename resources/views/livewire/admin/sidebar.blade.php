@@ -123,7 +123,7 @@
 
  <div class="mt-auto p-4 border-t border-slate-200">
         <div class="flex items-center gap-3">
-            <div class="h-[40px] w-[50px] rounded-md bg-slate-900 text-slate-50 font-bold flex justify-center items-center">
+            <div class="h-[40px] w-[65px] rounded-md bg-slate-900 text-slate-50 font-bold flex justify-center items-center">
                 {{ Auth::user() -> name[0] }}
             </div>
 

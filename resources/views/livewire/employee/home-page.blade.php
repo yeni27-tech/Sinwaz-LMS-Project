@@ -11,7 +11,7 @@
                 <div>
                     <h1 class="mt-1 text-2xl md:text-3xl font-semibold tracking-tight">Welcome to Sinwaz LMS</h1>
                     <p class="mt-2 text-sm text-white/80 max-w-2xl">
-                        Ringkasan performa quiz, users, attempts, dan leaderboard. Semua angka di bawah ini masih dummy (statis).
+                        Ringkasan performa quiz, users, attempts, dan leaderboard.
                     </p>
                 </div>
             </div>

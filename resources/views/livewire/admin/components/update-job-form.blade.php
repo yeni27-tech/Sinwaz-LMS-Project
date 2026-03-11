@@ -71,8 +71,7 @@
 
                 <div>
                     <x-input-label for="description" :value="__('Description')" />
-                    <textarea  name="description" id="description" class="w-full h-40 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Type quiz description">{{ $this -> jobById -> description }}
-                    </textarea>
+                    <textarea  name="description" id="description" class="w-full h-40 p-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500" placeholder="Type quiz description">{{ $this -> jobById -> description }}</textarea>
                     <x-input-error :messages="$errors->get('description')" class="mt-2" />
                 </div>
 

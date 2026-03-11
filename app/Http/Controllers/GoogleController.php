@@ -34,7 +34,7 @@ class GoogleController extends Controller
                 'google_id' => $googleUser -> id
             ]);
 
-            return redirect('/');
+            return redirect() -> route('home');
 
         } else {
             User::create([
@@ -46,7 +46,7 @@ class GoogleController extends Controller
                 'email_verified_at' => Carbon::now(),
             ]);
 
-            return redirect('/');
+            return redirect() -> route('home');
         }
 
       } catch(  \Throwable $th) {

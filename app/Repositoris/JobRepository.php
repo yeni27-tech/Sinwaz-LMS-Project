@@ -37,7 +37,7 @@ class JobRepository implements JobRepositoryInterface
             return Job::create([
                 'job_maker_id' => $jobMakerId,
                 'name' => $request->name,
-                'description' => $request->description,
+                'description' => $request->description ?? '',
                 'type' => $request->type,
                 'location' => $request->location,
                 'experience' => $request->experience,

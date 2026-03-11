@@ -99,6 +99,6 @@ class QuizAttemptPage extends Component
             'title' => 'Submit Quiz Successfully'
         ]);
 
-        return redirect()->route('quiz.result', ['id' => $this -> quizAttemptId]);
+        return redirect()->route('quiz.result', ['id' => $quizAttemptById]);
     }
 }

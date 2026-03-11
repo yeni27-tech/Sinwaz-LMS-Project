@@ -9,9 +9,9 @@
                 </div>
 
                 <div class=" flex flex-col gap-2">
-                    <x-primary-button  class=" text-sm bg-blue-500 rounded-md w-fit text-center flex justify-center items-center py-2 font-bold ">
-                        {{ __('Save') }}
-                    </x-primary-button>
+                    <button
+                    class=" text-sm bg-blue-500 rounded-md w-fit text-center flex justify-center items-center py-1.5 mt-2 font-bold text-slate-50 px-4"
+                    >Save</button>
                 </div>
             </form>
         </div>
