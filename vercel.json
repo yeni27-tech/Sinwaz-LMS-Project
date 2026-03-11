@@ -3,8 +3,26 @@
     "outputDirectory": "public",
     "functions": {
         "api/lambda.php": {
-            "runtime": "vercel-php@0.7.4"
+            "runtime": "vercel-php@0.7.4",
+            "maxDuration": 10,
+            "memory": 1024
         }
     },
-    "rewrites": [{ "source": "/{.*}", "destination": "/api/lambda.php" }]
+    "rewrites": [
+        {
+            "source": "/(.*)",
+            "destination": "/api/lambda.php"
+        }
+    ],
+    "headers": [
+        {
+            "source": "/api/*",
+            "headers": [
+                {
+                    "key": "Cache-Control",
+                    "value": "max-age=0, s-maxage=86400, stale-while-revalidate=86400"
+                }
+            ]
+        }
+    ]
 }
