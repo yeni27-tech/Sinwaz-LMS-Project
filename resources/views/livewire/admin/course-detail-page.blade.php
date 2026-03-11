@@ -1,4 +1,8 @@
 <section class=" p-4 space-y-4 ">
+    <a href="{{ route('dashboard.admin.course') }}" class=" mb-4 flex flex-row items-center  gap-2">
+        <i class="ph ph-arrow-left"></i>
+    </a>
+
     <div class=" flex flex-row items-center justify-between">
         <h1 class=" font-bold text-2xl">Materials</h1>
 

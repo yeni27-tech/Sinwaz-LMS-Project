@@ -56,8 +56,8 @@ Route::prefix('job')->group(function () {
 // belum dites
 Route::prefix('material')->group(function () {
     Route::post('/', [MaterialController::class,'store'])->name('material.store');
-    Route::put('/{id}', action: [MaterialController::class,'update'])->name('material.update');
-    Route::delete('/{id}', action: [MaterialController::class,'destroy'])->name('material.destroy');
+    Route::put('/{id}', [MaterialController::class,'update'])->name('material.update');
+    Route::delete('/{id}', [MaterialController::class,'destroy'])->name('material.destroy');
 });
 
 Route::prefix('quiz')->group(function () {

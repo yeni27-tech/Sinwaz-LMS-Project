@@ -64,8 +64,6 @@ class DivisiService
                 'title' => 'Create Divisi Successfully'
             ]);
 
-             return redirect() -> route('dashboard.admin.divisi');
-
         } catch (\Throwable $th) {
             throw $th;
         }

@@ -33,6 +33,9 @@ class DivisiController extends Controller
     public function store(DivisiRequest $request)
     {
         $this->divisiService->postDivisi($request -> toDTO());
+
+            return redirect() -> route('dashboard.admin.divisi');
+
     }
 
     public function edit($id)

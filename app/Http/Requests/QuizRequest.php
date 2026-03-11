@@ -25,7 +25,7 @@ class QuizRequest extends FormRequest
         return [
             'divisi_id' => ['required', 'nullable', 'exists:divisis,id'],
             'name' => ['required', 'string'],
-            'description' => ['required', 'string'],
+            'description' => [''],
             'is_active' => ['boolean'],
             'duration' => [ 'integer'],
         ];

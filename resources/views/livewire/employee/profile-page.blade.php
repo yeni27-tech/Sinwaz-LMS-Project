@@ -9,7 +9,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <div class="text-sm font-semibold text-slate-700">Quiz Attempted</div>
-                        <div class="text-xs text-slate-500">Quiz yang sudah dikerjakan</div>
+                        <div class="text-xs text-slate-500">Total quiz attempt</div>
                     </div>
                     <div class="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
                         <svg class="h-5 w-5 text-blue-700" viewBox="0 0 24 24" fill="none">
@@ -31,7 +31,7 @@
                 <div class="flex items-center justify-between">
                     <div>
                         <div class="text-sm font-semibold text-slate-700">Your Score</div>
-                        <div class="text-xs text-slate-500">Total score kamu</div>
+                        <div class="text-xs text-slate-500">Total score what you earned</div>
                     </div>
                     <div class="h-10 w-10 rounded-xl bg-blue-50 border border-blue-100 flex items-center justify-center">
                         <svg class="h-5 w-5 text-blue-700" viewBox="0 0 24 24" fill="none">

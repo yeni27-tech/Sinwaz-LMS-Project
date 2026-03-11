@@ -22,6 +22,10 @@ class UpdateMaterialForm extends Component
         $this -> yt_video_link = $this -> materialById -> yt_video_link;
     }
 
+    public function placeholder() {
+        return view('components.loading');
+    }
+
     public function inputYTVideoLink($value) {
         $this -> yt_video_link = $value;
     }

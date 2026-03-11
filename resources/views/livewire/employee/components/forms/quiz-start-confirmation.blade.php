@@ -44,7 +44,7 @@
 
                 <div class=" flex flex-col gap-">
                     <h3 class=" text-sm text-slate-400 font-semibold">Durasi</h3>
-                    <h1 class=" text-xl font-bold">{{ $this -> quizById -> duration ? $this -> quizById -> duration : '-' }} Menit</h1>
+                    <h1 class=" text-xl font-bold">{{ '-' }} Menit</h1>
                 </div>
             </div>
         </div>

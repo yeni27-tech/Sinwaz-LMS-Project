@@ -6,6 +6,6 @@
     <div>
         <h1 class=" font-bold text-2xl  mb-4">Update Course</h1>
 
-        <livewire:admin.components.update-divisi-form :id="request()->route('id')" lazy />
+        <livewire:admin.components.update-course-form :id="request()->route('id')" lazy />
     </div>
 </x-admin-layout>

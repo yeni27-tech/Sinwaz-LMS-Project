@@ -31,8 +31,8 @@ class HomePage extends Component
         $courseService = app(CourseService::class);
         $quizAttemptService = app(QuizAttemptService::class);
 
-        $quizzesData = $quizService -> getAllQuizzes() -> where('divisi_id', 4);
-        $coursesData = $courseService -> getCoursesWithoutPagination() -> where('divisi_id', 4);
+        $quizzesData = $quizService -> getAllQuizzes() -> where('divisi_id', Auth::user() -> divisi_id);
+        $coursesData = $courseService -> getCoursesWithoutPagination() -> where('divisi_id', Auth::user() -> divisi_id);
 
         $this->quizzesData = $quizzesData;
         $this->coursesData = $coursesData;

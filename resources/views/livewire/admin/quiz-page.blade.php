@@ -2,16 +2,14 @@
     <livewire:components.sidebar-top />
 
     <div class="p-4 md:p-6 space-y-6 mt-4">            <!-- HERO -->
-
             <!-- QUICK KPIs -->
-
             <section class=" flex flex-row items-center justify-between">
                 <h1 class=" font-bold text-4xl">Table Quizzes</h1>
 
                 <a href="{{ route("dashboard.admin.quiz.create") }}" class=" bg-blue-500 px-4 py-2 rounded-md text-slate-50 font-bold">Tambah Data</a>
             </section>
 
-            <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3">
+            <section class="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-3">
                 <div class="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
                     <div class="flex items-center justify-between">
                         <div>

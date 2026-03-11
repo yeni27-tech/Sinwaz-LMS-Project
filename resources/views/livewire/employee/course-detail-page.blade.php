@@ -1,4 +1,8 @@
 <section class=" p-4 space-y-4 ">
+   <a href="{{ route('employee.home') }}" class=" mb-4 flex flex-row items-center  gap-2">
+        <i class="ph ph-arrow-left"></i>
+    </a>
+
     <h1 class=" font-bold text-2xl">Materials</h1>
 
     <div class=" grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-4  w-full">

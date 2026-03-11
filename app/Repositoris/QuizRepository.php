@@ -73,7 +73,7 @@ class QuizRepository implements QuizRepositoryInterface
             return Quiz::create([
                 'divisi_id' => $request -> divisi_id,
                 'name' => $request -> name,
-                'description' => $request -> description,
+                'description' => $request -> description  ?? '',
                 // 'duration' => $request -> duration,
                 // 'is_active' => $request -> is_active,
             ]);
